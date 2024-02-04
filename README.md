@@ -16,7 +16,7 @@ npm start
 The project structure is organized as follows:
 
 - `src`: Contains TypeScript source files
-    - `index.ts`: Configures and starts the Express application
+  - `index.ts`: Configures and starts the Express application
 - `dist`: Output directory created during build for compiled TypeScript files
 - `package.json`: Project configuration and dependencies
 - `tsconfig.json`: TypeScript configuration
@@ -26,18 +26,25 @@ You can customize the project configuration i nthe `tsconfig.json` file and adju
 <!-- knex commands -->
 
 <!-- create migration-->
+
 npx knex migrate:make init-migration --knexfile src\config\knexfile.ts
+
 <!-- create seed -->
+
 npx knex seed:make init-seed --knexfile src\config\knexfile.ts
 
 <!-- run latest migration up -->
+
 npx knex migrate:latest --knexfile src\config\knexfile.ts
 
 <!-- rollback migration -->
+
 npx knex migrate:rollback --knexfile src\config\knexfile.ts
 
 <!-- run seed -->
+
 npx knex seed:run --knexfile src\config\knexfile.ts
 
 <!-- pm2 start process -->
+
 pm2 start index.js --name 'alpha-server'
