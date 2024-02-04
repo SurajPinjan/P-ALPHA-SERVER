@@ -6,5 +6,5 @@ export async function seed(knex: Knex): Promise<void> {
 
     // Inserts seed entries
     await knex("table_u").insert([
-        { username: "admin", passwordHash: "$2b$04$dGPmF1bu86gwlX/dX5lcsenm8HR5Y5zTT60FYpOtpa7CTxh9Qh9vm", urole: "admin", createBy: "Anonymous" }]);
+        { username: "opearator", passwordHash: "$2b$04$dGPmF1bu86gwlX/dX5lcsenm8HR5Y5zTT60FYpOtpa7CTxh9Qh9vm", urole: "operator", createBy: "Anonymous" }]);
 };

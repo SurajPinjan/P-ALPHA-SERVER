@@ -38,3 +38,6 @@ npx knex migrate:rollback --knexfile src\config\knexfile.ts
 
 <!-- run seed -->
 npx knex seed:run --knexfile src\config\knexfile.ts
+
+<!-- pm2 start process -->
+pm2 start index.js --name 'alpha-server'
