@@ -1,47 +1,51 @@
 export enum API_RESPONSE_CODE {
-    SUCCESS = 'S001',
-    ERROR = 'ER001',
-    NOT_FOUND = 'ER002',
-    REQUEST_INVALID = 'ER003',
-    ERROR_CREATING = 'ER004',
-    ERROR_RETRIEVING_DATA = 'ER005',
-    ERROR_UPDATING_DATA = 'ER006',
-    ERROR_UPLOADING_FILE = 'ER007',
-    ERROR_INVALID_TOKEN = 'ER008',
-    ERROR_INVALID_ROLE = 'ER009',
+  SUCCESS = 'S001',
+  ERROR = 'ER001',
+  NOT_FOUND = 'ER002',
+  REQUEST_INVALID = 'ER003',
+  ERROR_CREATING = 'ER004',
+  ERROR_RETRIEVING_DATA = 'ER005',
+  ERROR_UPDATING_DATA = 'ER006',
+  ERROR_UPLOADING_FILE = 'ER007',
+  ERROR_INVALID_TOKEN = 'ER008',
+  ERROR_INVALID_ROLE = 'ER009',
 }
 
 export enum HTTP_OPERATION {
-    // CRUD
-    CREATE_ONE = 'createone',
-    GET_ALL = 'getall',
-    GET_ONE = 'getone',
-    UPDATE_ONE = 'updateone',
+  // CRUD
+  CREATE_ONE = 'createone',
+  GET_ALL = 'getall',
+  GET_ONE = 'getone',
+  UPDATE_ONE = 'updateone',
 
-    // AUTH
-    LOGIN = 'login',
-    LOGOUT = 'logout',
+  // AUTH
+  LOGIN = 'login',
+  LOGOUT = 'logout',
 
-    // FILE
-    UPLOAD = 'upload',
+  // FILE
+  UPLOAD = 'upload',
 }
-
 
 // Auth enums
 
-export const SESSION_NAME = 'sixsigma';
+export const SESSION_NAME = 'sixsigma'
 
 export enum AUTH_STRATEGIES {
-    LOCAL = 'local'
+  LOCAL = 'local',
 }
 
 // Roles
 
 export enum USER_ROLES {
-    ADMIN = 'admin',
-    OPERATOR = 'operator'
+  ADMIN = 'admin',
+  OPERATOR = 'operator',
+}
+
+export enum SELECT_VALUES {
+  VALUE_1 = 'VALUE1',
+  VALUE_2 = 'VALUE2',
 }
 
 // DB constants
 
-export const MYSQL_CLIENT = 'mysql2';
+export const MYSQL_CLIENT = 'mysql2'
