@@ -10,6 +10,7 @@ import { router as xRoutes } from './controllers/CRUDControllers/XController'
 import { router as xRoutesV2 } from './controllers/CRUDControllers/XV2Controller'
 import { router as authRoutesV2 } from './controllers/UIControllers/AuthV2Controller'
 import { router as fileRoutesV2 } from './controllers/UIControllers/FileV2Controller'
+import { router as masterRoutesV2 } from './controllers/CRUDControllers/MasterV2Controller'
 import { sequelize } from './config/sequelizeConfig'
 import { generateSecretKey } from './services/cryptoService'
 import { SESSION_NAME } from './types/enums'
@@ -95,10 +96,11 @@ sequelize
   })
 
 // api initialize
-app.use('/v1/x', xRoutes)
-app.use('/v2/x', xRoutesV2)
-app.use('/v2/auth', authRoutesV2)
-app.use('/v2/file', fileRoutesV2)
+app.use('/app/v1/x', xRoutes)
+app.use('/app/v2/x', xRoutesV2)
+app.use('/app/v2/auth', authRoutesV2)
+app.use('/app/v2/file', fileRoutesV2)
+app.use('/app/v2/master', masterRoutesV2)
 
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at http://localhost:${PORT}`)

@@ -19,4 +19,17 @@ export async function seed(knex: Knex): Promise<void> {
       createBy: 'Anonymous',
     },
   ])
+
+  await knex('table_master').insert([
+    {
+      master: 'VALUE1',
+      isDeleted: false,
+      createBy: 'Anonymous',
+    },
+    {
+      master: 'VALUE2',
+      isDeleted: false,
+      createBy: 'Anonymous',
+    },
+  ])
 }

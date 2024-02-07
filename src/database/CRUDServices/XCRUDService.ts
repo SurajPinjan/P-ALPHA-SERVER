@@ -7,13 +7,14 @@ export const getallX = async function (
   pageSize?: number,
   pageNumber?: number
 ): Promise<XModelAttributes[]> {
+
+  console.log(filters);
   const connection = await connPool.getConnection()
   try {
     let _query: string = `SELECT * FROM table_x where (true) and isDeleted=false`
     if (typeof pageSize != 'undefined' && typeof pageNumber != 'undefined') {
-      _query = _query.concat(` limit ${pageSize} offset ${pageNumber}`)
+      _query = _query.concat(` limit ${pageSize} offset ${pageNumber * pageSize}`)
     }
-
     const [rows] = await connection.query(_query, [])
     return rows as XModelAttributes[]
   } finally {
