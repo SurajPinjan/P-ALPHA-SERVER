@@ -1,17 +1,18 @@
 import { connPool } from '../..'
-import logger from '../../config/winston-config'
+// import logger from '../../config/winston-config'
+import { getWhereClause } from '../../services/filterEngine'
+import { Filter } from '../../types/filterTypes'
 import { XModelAttributes } from '../models/table_x'
 
 export const getallX = async function (
-  filters: unknown,
+  filters: Filter[],
   pageSize?: number,
   pageNumber?: number
 ): Promise<XModelAttributes[]> {
-
-  console.log(filters);
+  const whereClause: string = getWhereClause(filters)
   const connection = await connPool.getConnection()
   try {
-    let _query: string = `SELECT * FROM table_x where (true) and isDeleted=false`
+    let _query: string = `SELECT * FROM table_x where ${whereClause} and isDeleted=false`
     if (typeof pageSize != 'undefined' && typeof pageNumber != 'undefined') {
       _query = _query.concat(` limit ${pageSize} offset ${pageNumber * pageSize}`)
     }
@@ -22,11 +23,11 @@ export const getallX = async function (
   }
 }
 
-export const getCountX = async function (filters: unknown): Promise<number> {
-  logger.info(`note::${filters} filter not used`)
+export const getCountX = async function (filters: Filter[]): Promise<number> {
+  const whereClause: string = getWhereClause(filters)
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `SELECT COUNT(*) as 'count' FROM table_x where isDeleted=false and (true)`
+    const _query: string = `SELECT COUNT(*) as 'count' FROM table_x where isDeleted=false and ${whereClause}`
 
     const [rows] = await connection.execute(_query, [])
     return (rows as { count: number }[])[0].count

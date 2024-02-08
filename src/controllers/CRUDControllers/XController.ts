@@ -18,7 +18,7 @@ import { isAuthenticatedAdmin } from '../../auth/passportConfig'
 export const router = express.Router()
 
 router.post(`/${HTTP_OPERATION.GET_ALL}`, isAuthenticatedAdmin, async (req: Request, res: Response) => {
-  const requestData: HttpGetAllRequestBody<XModelInstance> = req.body
+  const requestData: HttpGetAllRequestBody = req.body
   // add validations for body
   const _isValid: boolean = true
 

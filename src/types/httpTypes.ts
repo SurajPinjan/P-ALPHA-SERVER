@@ -1,16 +1,14 @@
 import { UModelAttributes } from '../database/models/table_u'
 import { API_RESPONSE_CODE } from './enums'
+import { Filter } from './filterTypes'
 
 // request types
-export type Filter<T> = {
-  data?: T
-}
 
-export type HttpGetAllRequestBody<T> = {
+export type HttpGetAllRequestBody = {
   isPagination?: boolean
   pageNumber?: number
   pageSize?: number
-  filters?: Filter<T>
+  filters: Filter[]
 }
 
 export type HttpGetOneRequestBody = {
@@ -59,6 +57,6 @@ export type HttpResponseLogin = HttpResponseBody & {
 }
 
 export interface PassportRequest extends Request {
-    isAuthenticated: () => boolean,
-    user: UModelAttributes
-  }
+  isAuthenticated: () => boolean
+  user: UModelAttributes
+}
