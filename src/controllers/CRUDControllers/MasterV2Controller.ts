@@ -10,13 +10,12 @@ import {
 import { MasterModelAttributes, validateMaster } from '../../database/models/table_master'
 import { validateuid } from '../../services/basicValidators'
 import { invalidRequest } from '../../services/errorHandling'
-import { API_RESPONSE_CODE, HTTP_OPERATION } from '../../types/enums'
+import { API_RESPONSE_CODE, API_RESPONSE_MAP, HTTP_OPERATION } from '../../types/enums'
 import {
   HttpCreateOneRequestBody,
   HttpErrorResponseBody,
   HttpGetAllRequestBody,
   HttpGetOneRequestBody,
-  HttpResponseCreateOne,
   HttpResponseGetAll,
   HttpResponseGetOne,
   HttpUpdateOneRequestBody,
@@ -42,14 +41,16 @@ router.post(`/${HTTP_OPERATION.GET_ALL}`, async (req: Request, res: Response) =>
       const xListCount: number = await getCountMaster(requestData.filters)
       const responseData: HttpResponseGetAll<MasterModelAttributes> = {
         data: xList,
-        responseCode: API_RESPONSE_CODE.SUCCESS,
+        responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
+        displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
         totalCount: xListCount,
       }
       res.status(200).json(responseData)
     } catch (error: unknown) {
       if (error instanceof Error)
         res.status(500).json({
-          responseCode: API_RESPONSE_CODE.ERROR_RETRIEVING_DATA,
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_RETRIEVING_DATA].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_RETRIEVING_DATA].displayMsg,
           errorMessage: error.message,
         } as HttpErrorResponseBody)
     }
@@ -68,13 +69,28 @@ router.post(`/${HTTP_OPERATION.GET_ONE}`, ensureAuthenticated, async (req: Reque
   } else {
     try {
       const x: MasterModelAttributes | null = await getOneMaster(requestData.uid)
-      const responseData: HttpResponseGetOne<MasterModelAttributes> = {
-        data: x,
-        responseCode: x == null ? API_RESPONSE_CODE.NOT_FOUND : API_RESPONSE_CODE.SUCCESS,
+      if (x == null) {
+        const responseData: HttpErrorResponseBody = {
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.NOT_FOUND].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.NOT_FOUND].displayMsg,
+          errorMessage: '-',
+        }
+        res.status(200).json(responseData)
+      } else {
+        const responseData: HttpResponseGetOne<MasterModelAttributes> = {
+          data: x,
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+        }
+        res.status(200).json(responseData)
       }
-      res.status(200).json(responseData)
-    } catch (error) {
-      res.status(200).json({ responseCode: API_RESPONSE_CODE.ERROR_RETRIEVING_DATA })
+    } catch (error: unknown) {
+      if (error instanceof Error)
+        res.status(200).json({
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_RETRIEVING_DATA].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_RETRIEVING_DATA].displayMsg,
+          errorMessage: error.message,
+        } as HttpErrorResponseBody)
     }
   }
 })
@@ -90,14 +106,28 @@ router.post(`/${HTTP_OPERATION.CREATE_ONE}`, isAuthenticatedAdmin, async (req: R
   } else {
     try {
       const x: MasterModelAttributes | null = await createOneMaster(requestData.data)
-      const responseData: HttpResponseCreateOne<MasterModelAttributes> = {
-        data: x,
-        responseCode: x == null ? API_RESPONSE_CODE.ERROR_CREATING : API_RESPONSE_CODE.SUCCESS,
+      if (x == null) {
+        const responseData: HttpErrorResponseBody = {
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_CREATING].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_CREATING].displayMsg,
+          errorMessage: '-',
+        }
+        res.status(200).json(responseData)
+      } else {
+        const responseData: HttpResponseGetOne<MasterModelAttributes> = {
+          data: x,
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+        }
+        res.status(200).json(responseData)
       }
-      res.status(200).json(responseData)
-    } catch (error) {
-      console.log(error)
-      res.status(200).json({ responseCode: API_RESPONSE_CODE.ERROR })
+    } catch (error: unknown) {
+      if (error instanceof Error)
+        res.status(200).json({
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_CREATING].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_CREATING].displayMsg,
+          errorMessage: error.message,
+        } as HttpErrorResponseBody)
     }
   }
 })
@@ -111,16 +141,28 @@ router.post(`/${HTTP_OPERATION.UPDATE_ONE}`, isAuthenticatedAdmin, async (req: R
   } else {
     try {
       const x: MasterModelAttributes | null = await updateOneMaster(requestData.data)
-      const responseData: HttpResponseCreateOne<MasterModelAttributes> = {
-        data: x,
-        responseCode: x == null ? API_RESPONSE_CODE.ERROR_UPDATING_DATA : API_RESPONSE_CODE.SUCCESS,
+      if (x == null) {
+        const responseData: HttpErrorResponseBody = {
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_UPDATING_DATA].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_UPDATING_DATA].displayMsg,
+          errorMessage: '-',
+        }
+        res.status(200).json(responseData)
+      } else {
+        const responseData: HttpResponseGetOne<MasterModelAttributes> = {
+          data: x,
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+        }
+        res.status(200).json(responseData)
       }
-      res.status(200).json(responseData)
     } catch (error: unknown) {
       if (error instanceof Error)
-        res
-          .status(500)
-          .json({ responseCode: API_RESPONSE_CODE.ERROR, errorMessage: error.message } as HttpErrorResponseBody)
+        res.status(200).json({
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_UPDATING_DATA].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_UPDATING_DATA].displayMsg,
+          errorMessage: error.message,
+        } as HttpErrorResponseBody)
     }
   }
 })

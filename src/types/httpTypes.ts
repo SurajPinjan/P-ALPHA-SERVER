@@ -1,5 +1,4 @@
 import { UModelAttributes } from '../database/models/table_u'
-import { API_RESPONSE_CODE } from './enums'
 import { Filter } from './filterTypes'
 
 // request types
@@ -25,7 +24,8 @@ export type HttpUpdateOneRequestBody<T> = {
 
 // Response types
 export type HttpResponseBody = {
-  responseCode: API_RESPONSE_CODE
+  responseCode: string
+  displayMsg: string
 }
 
 export type HttpUploadResponseBody = HttpResponseBody & {
