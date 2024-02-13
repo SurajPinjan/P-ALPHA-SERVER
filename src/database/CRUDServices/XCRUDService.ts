@@ -16,6 +16,9 @@ export const getallX = async function (
     if (typeof pageSize != 'undefined' && typeof pageNumber != 'undefined') {
       _query = _query.concat(` limit ${pageSize} offset ${pageNumber * pageSize}`)
     }
+
+    console.log(_query);
+    
     const [rows] = await connection.query(_query, [])
     return rows as XModelAttributes[]
   } finally {

@@ -30,7 +30,8 @@ function getWhereClause(filters: Filter[], logicalOperator: LogicalOperator = 'A
     }
   }
 
-  return clauses.join(` ${logicalOperator} `)
+  const resp: string = clauses.join(` ${logicalOperator} `)
+  return ` true ${resp}`
 }
 
 export { getWhereClause }

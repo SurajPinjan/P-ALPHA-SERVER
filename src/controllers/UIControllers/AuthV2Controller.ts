@@ -34,7 +34,7 @@ router.post(`/${HTTP_OPERATION.LOGIN}`, async (req: Request, res: Response, next
 
       // res.cookie('XSRF-TOKEN', req.csrfToken());
 
-      return res.status(200).send({
+      return res.status(400).send({
         token: req.sessionID,
         userInfo: user,
         responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
@@ -51,7 +51,7 @@ router.post(`/${HTTP_OPERATION.LOGOUT}`, ensureAuthenticated, (req: Request, res
     },
     (err: Error) => {
       if (!err) {
-        return res.status(200).send({
+        return res.status(400).send({
           responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
           displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
         } as HttpResponseBody)
