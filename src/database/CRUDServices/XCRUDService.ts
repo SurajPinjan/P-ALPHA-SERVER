@@ -12,13 +12,13 @@ export const getallX = async function (
   const whereClause: string = getWhereClause(filters)
   const connection = await connPool.getConnection()
   try {
-    let _query: string = `SELECT * FROM table_x where ${whereClause} and isDeleted=false`
+    let _query: string = `SELECT * FROM table_x where isDeleted=false ${whereClause}`
     if (typeof pageSize != 'undefined' && typeof pageNumber != 'undefined') {
       _query = _query.concat(` limit ${pageSize} offset ${pageNumber * pageSize}`)
     }
 
     console.log(_query);
-    
+
     const [rows] = await connection.query(_query, [])
     return rows as XModelAttributes[]
   } finally {
@@ -30,7 +30,7 @@ export const getCountX = async function (filters: Filter[]): Promise<number> {
   const whereClause: string = getWhereClause(filters)
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `SELECT COUNT(*) as 'count' FROM table_x where isDeleted=false and ${whereClause}`
+    const _query: string = `SELECT COUNT(*) as 'count' FROM table_x where isDeleted=false ${whereClause}`
 
     const [rows] = await connection.execute(_query, [])
     return (rows as { count: number }[])[0].count

@@ -24,7 +24,7 @@ import { ValidationResult } from '../../types/validationTypes'
 
 export const router = express.Router()
 
-router.post(`/${HTTP_OPERATION.GET_ALL}`, async (req: Request, res: Response) => {
+router.post(`/${HTTP_OPERATION.GET_ALL}`, ensureAuthenticated, async (req: Request, res: Response) => {
   const requestData: HttpGetAllRequestBody = req.body
   // add validations for body
   const _isValid: boolean = true

@@ -31,7 +31,7 @@ function getWhereClause(filters: Filter[], logicalOperator: LogicalOperator = 'A
   }
 
   const resp: string = clauses.join(` ${logicalOperator} `)
-  return ` true ${resp}`
+  return ` ${resp === '' ? '' : 'AND'} ${resp}`
 }
 
 export { getWhereClause }

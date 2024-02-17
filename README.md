@@ -48,3 +48,11 @@ npx knex seed:run --knexfile src\config\knexfile.ts
 <!-- pm2 start process -->
 
 pm2 start index.js --name 'alpha-server'
+
+<!-- build exe for windows server -->
+
+pkg . --target node16-win-x64 --output alpha-server.exe --entry [dist/index.js] --env-file .env
+
+<!-- create a service from exe -->
+
+sc create "AlphaServer" binPath="C:\work\P-ALFA\P-ALPHA-SERVER\alpha-server.exe" start=auto displayName="AlphaServer"
