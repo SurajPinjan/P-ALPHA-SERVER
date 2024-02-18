@@ -1,13 +1,20 @@
 import { UModelAttributes } from '../database/models/table_u'
+import { SortDirections } from './enums'
 import { Filter } from './filterTypes'
 
 // request types
+
+export type Sort = {
+  field: string
+  sort: SortDirections
+}
 
 export type HttpGetAllRequestBody = {
   isPagination?: boolean
   pageNumber?: number
   pageSize?: number
   filters: Filter[]
+  sorts: Sort[]
 }
 
 export type HttpGetOneRequestBody = {

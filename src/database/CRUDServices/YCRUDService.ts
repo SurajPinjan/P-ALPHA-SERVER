@@ -1,18 +1,22 @@
 import { connPool } from '../..'
 // import logger from '../../config/winston-config'
-import { getWhereClause } from '../../services/filterEngine'
+import { getSortClause, getWhereClause } from '../../services/filterEngine'
 import { Filter } from '../../types/filterTypes'
+import { Sort } from '../../types/httpTypes'
 import { YModelAttributes } from '../models/table_y'
 
 export const getallY = async function (
   filters: Filter[],
+  sorts: Sort[],
   pageSize?: number,
   pageNumber?: number
 ): Promise<YModelAttributes[]> {
   const whereClause: string = getWhereClause(filters)
+  const sortClause: string = getSortClause(sorts)
+
   const connection = await connPool.getConnection()
   try {
-    let _query: string = `SELECT * FROM table_y where isDeleted=false ${whereClause}`
+    let _query: string = `SELECT * FROM table_y where isDeleted=false ${whereClause} ${sortClause}`
     if (typeof pageSize != 'undefined' && typeof pageNumber != 'undefined') {
       _query = _query.concat(` limit ${pageSize} offset ${pageNumber * pageSize}`)
     }

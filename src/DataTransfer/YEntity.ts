@@ -6,6 +6,7 @@ export interface YWithXModelAttributes extends ModelAttributes {
   x_uid: number
   x_columnDate: string
   x_url: string
+  x_columnUText: string
   x_columnSelect: SELECT_VALUES
   columnText: string
 }

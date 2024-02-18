@@ -62,6 +62,9 @@ export enum SELECT_VALUES {
   VALUE_2 = 'VALUE2',
 }
 
+// Sort Direction
+export type SortDirections = 'asc' | 'desc'
+
 // DB constants
 
 export const MYSQL_CLIENT = 'mysql2'

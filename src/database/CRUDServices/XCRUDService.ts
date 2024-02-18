@@ -1,23 +1,27 @@
 import { connPool } from '../..'
 // import logger from '../../config/winston-config'
-import { getWhereClause } from '../../services/filterEngine'
+import { getSortClause, getWhereClause } from '../../services/filterEngine'
 import { Filter } from '../../types/filterTypes'
+import { Sort } from '../../types/httpTypes'
 import { XModelAttributes } from '../models/table_x'
 
 export const getallX = async function (
   filters: Filter[],
+  sorts: Sort[],
   pageSize?: number,
   pageNumber?: number
 ): Promise<XModelAttributes[]> {
   const whereClause: string = getWhereClause(filters)
+  const sortClause: string = getSortClause(sorts)
+
   const connection = await connPool.getConnection()
   try {
-    let _query: string = `SELECT * FROM table_x where isDeleted=false ${whereClause}`
+    let _query: string = `SELECT * FROM table_x where isDeleted=false ${whereClause} ${sortClause}`
     if (typeof pageSize != 'undefined' && typeof pageNumber != 'undefined') {
       _query = _query.concat(` limit ${pageSize} offset ${pageNumber * pageSize}`)
     }
 
-    console.log(_query);
+    console.log(_query)
 
     const [rows] = await connection.query(_query, [])
     return rows as XModelAttributes[]
@@ -55,8 +59,14 @@ export const getOneX = async function (uid: number): Promise<XModelAttributes | 
 export const createOneX = async function (data: XModelAttributes): Promise<XModelAttributes | null> {
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `INSERT INTO table_x (columnDate,columnSelect, url, isDeleted) VALUES (?,?,?,?)`
-    const [results] = await connection.execute(_query, [data.columnDate, data.columnSelect, data.url, data.isDeleted])
+    const _query: string = `INSERT INTO table_x (columnUText,columnDate,columnSelect, url, isDeleted) VALUES (?,?,?,?,?)`
+    const [results] = await connection.execute(_query, [
+      data.columnUText,
+      data.columnDate,
+      data.columnSelect,
+      data.url,
+      data.isDeleted,
+    ])
     const json: unknown = results
     const newData: XModelAttributes | null = await getOneX((json as { insertId: number }).insertId)
     return newData
@@ -68,9 +78,16 @@ export const createOneX = async function (data: XModelAttributes): Promise<XMode
 export const updateOneX = async function (data: XModelAttributes): Promise<XModelAttributes | null> {
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `UPDATE table_x SET columnDate = ?,columnSelect=?,url = ?, isDeleted = ? WHERE uid = ?`
+    const _query: string = `UPDATE table_x SET columnUText = ?,columnDate = ?,columnSelect=?,url = ?, isDeleted = ? WHERE uid = ?`
 
-    await connection.execute(_query, [data.columnDate, data.columnSelect, data.url, data.isDeleted, data.uid])
+    await connection.execute(_query, [
+      data.columnUText,
+      data.columnDate,
+      data.columnSelect,
+      data.url,
+      data.isDeleted,
+      data.uid,
+    ])
 
     const updatedData: XModelAttributes | null = await getOneX(data.uid)
     return updatedData

@@ -1,4 +1,5 @@
 import { Filter, LogicalOperator, NestedFilter, SimpleFilter } from '../types/filterTypes'
+import { Sort } from '../types/httpTypes'
 
 function getWhereClause(filters: Filter[], logicalOperator: LogicalOperator = 'AND'): string {
   const clauses: string[] = []
@@ -34,4 +35,16 @@ function getWhereClause(filters: Filter[], logicalOperator: LogicalOperator = 'A
   return ` ${resp === '' ? '' : 'AND'} ${resp}`
 }
 
-export { getWhereClause }
+function getSortClause(sorts: Sort[]): string {
+  const clauses: string[] = []
+
+  for (const sort of sorts) {
+    clauses.push(`${sort.field} ${sort.sort}`)
+  }
+
+  const resp: string = clauses.join(', ')
+  return ` ${resp === '' ? '' : 'ORDER BY '} ${resp}`
+  return resp
+}
+
+export { getWhereClause, getSortClause }

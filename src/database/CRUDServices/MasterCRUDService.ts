@@ -1,15 +1,21 @@
 import { connPool } from '../..'
-import logger from '../../config/winston-config'
+import { getSortClause, getWhereClause } from '../../services/filterEngine'
+import { Filter } from '../../types/filterTypes'
+import { Sort } from '../../types/httpTypes'
 import { MasterModelAttributes } from '../models/table_master'
 
 export const getallMaster = async function (
-  filters: unknown,
+  filters: Filter[],
+  sorts: Sort[],
   pageSize?: number,
   pageNumber?: number
 ): Promise<MasterModelAttributes[]> {
-  const connection = await connPool.getConnection();
+  const connection = await connPool.getConnection()
   try {
-    let _query: string = `SELECT * FROM table_master where (true) and isDeleted=false`
+    const whereClause: string = getWhereClause(filters)
+    const sortClause: string = getSortClause(sorts)
+
+    let _query: string = `SELECT * FROM table_master where isDeleted=false ${whereClause} ${sortClause}`
     if (typeof pageSize != 'undefined' && typeof pageNumber != 'undefined') {
       _query = _query.concat(` limit ${pageSize} offset ${pageNumber * pageSize}`)
     }
@@ -20,11 +26,10 @@ export const getallMaster = async function (
   }
 }
 
-export const getCountMaster = async function (filters: unknown): Promise<number> {
-  logger.info(`note::${filters} filter not used`)
+export const getCountMaster = async function (filters: Filter[]): Promise<number> {
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `SELECT COUNT(*) as 'count' FROM table_master where isDeleted=false and (true)`
+    const _query: string = `SELECT COUNT(*) as 'count' FROM table_master where isDeleted=false ${filters}`
 
     const [rows] = await connection.execute(_query, [])
     return (rows as { count: number }[])[0].count

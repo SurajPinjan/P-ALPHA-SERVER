@@ -28,7 +28,12 @@ router.post(`/${HTTP_OPERATION.GET_ALL}`, ensureAuthenticated, async (req: Reque
     invalidRequest(res, `request invalid`)
   } else {
     try {
-      const xList: XModelAttributes[] = await getallX(requestData.filters, requestData.pageSize, requestData.pageNumber)
+      const xList: XModelAttributes[] = await getallX(
+        requestData.filters,
+        requestData.sorts,
+        requestData.pageSize,
+        requestData.pageNumber
+      )
       const xListCount: number = await getCountX(requestData.filters)
       const responseData: HttpResponseGetAll<XModelAttributes> = {
         data: xList,

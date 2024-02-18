@@ -28,7 +28,12 @@ router.post(`/${HTTP_OPERATION.GET_ALL}`, ensureAuthenticated, async (req: Reque
     invalidRequest(res, `request invalid`)
   } else {
     try {
-      const yList: YModelAttributes[] = await getallY(requestData.filters, requestData.pageSize, requestData.pageNumber)
+      const yList: YModelAttributes[] = await getallY(
+        requestData.filters,
+        requestData.sorts,
+        requestData.pageSize,
+        requestData.pageNumber
+      )
       const yListCount: number = await getCountY(requestData.filters)
       const responseData: HttpResponseGetAll<YModelAttributes> = {
         data: yList,

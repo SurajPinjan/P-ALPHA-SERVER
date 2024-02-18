@@ -35,6 +35,7 @@ router.post(`/${HTTP_OPERATION.GET_ALL}`, ensureAuthenticated, async (req: Reque
     try {
       const xList: MasterModelAttributes[] = await getallMaster(
         requestData.filters,
+        requestData.sorts,
         requestData.pageSize,
         requestData.pageNumber
       )

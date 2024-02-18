@@ -8,6 +8,7 @@ import { SELECT_VALUES } from '../../types/enums'
 export interface XModelAttributes extends ModelAttributes {
   columnDate: string
   url: string
+  columnUText: string
   columnSelect: SELECT_VALUES
 }
 
@@ -59,6 +60,11 @@ export const X = seq.define<XModelInstance>(
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+    },
+    columnUText: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      unique: true,
     },
     updateBy: {
       type: DataTypes.STRING(255),
