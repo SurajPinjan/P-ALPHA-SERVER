@@ -53,6 +53,10 @@ pm2 start index.js --name 'alpha-server'
 
 pkg . --target node16-win-x64 --output alpha-server.exe --entry [dist/index.js] --env-file .env
 
-<!-- create a service from exe -->
+<!-- build exe -->
 
-sc create "AlphaServer" binPath="C:\work\P-ALFA\P-ALPHA-SERVER\alpha-server.exe" start=auto displayName="AlphaServer"
+pkg . --target node16-win-x64 --output alpha-server.exe --entry [dist/index.js] --env-file .env
+
+<!-- create service (needs admin)-->
+
+sc.exe create "6SigmaServer" binPath= "C:\work\Titan_Projects\six_sigma_server\6sigma-server.exe" start= auto DisplayName= "6SigmaServer"
