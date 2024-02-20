@@ -10,7 +10,6 @@ export type Sort = {
 }
 
 export type HttpGetAllRequestBody = {
-  isPagination?: boolean
   pageNumber?: number
   pageSize?: number
   filters: Filter[]

@@ -16,7 +16,7 @@ export const getallYWithX = async function (
 
   const connection = await connPool.getConnection()
   try {
-    let _query: string = `SELECT y.*, x.columnUText as x_columnUText, x.uid as x_id, x.columnDate as x_columnDate, x.url as x_url, x.columnSelect as x_columnSelect FROM table_y y inner join table_x x on y.x_id = x.uid where y.isDeleted=false ${whereClause} ${sortClause}`
+    let _query: string = `SELECT y.*, x.columnUText as x_columnUText, x.columnDate as x_columnDate, x.url as x_url, x.columnSelect as x_columnSelect FROM table_y y inner join table_x x on y.x_id = x.uid where y.isDeleted=false ${whereClause} ${sortClause}`
     if (typeof pageSize != 'undefined' && typeof pageNumber != 'undefined') {
       _query = _query.concat(` limit ${pageSize} offset ${pageNumber * pageSize}`)
     }
