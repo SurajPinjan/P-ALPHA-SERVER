@@ -1,7 +1,7 @@
 import { Filter, LogicalOperator, NestedFilter, SimpleFilter } from '../types/filterTypes'
 import { Sort } from '../types/httpTypes'
 
-function getWhereClause(filters: Filter[], logicalOperator: LogicalOperator = 'AND'): string {
+function getWhereClause(filters: Filter[], sqlVarable: string, logicalOperator: LogicalOperator = 'AND'): string {
   const clauses: string[] = []
 
   for (const filter of filters) {
@@ -11,22 +11,26 @@ function getWhereClause(filters: Filter[], logicalOperator: LogicalOperator = 'A
       if (Array.isArray(value)) {
         if (operator === 'BETWEEN' && value.length === 2) {
           const [start, end] = value.map((val) => (typeof val === 'string' ? `'${val}'` : val))
-          clauses.push(`${column_name} ${operator} ${start} AND ${end}`)
+          clauses.push(`${sqlVarable}.${column_name} ${operator} ${start} AND ${end}`)
         } else {
           // Handle IN operator
           const valueList = value.map((val) => (typeof val === 'string' ? `'${val}'` : val)).join(', ')
-          clauses.push(`${column_name} ${operator} (${valueList})`)
+          clauses.push(`${sqlVarable}.${column_name} ${operator} (${valueList})`)
         }
       } else {
         // Handle other operators
         const formattedValue = typeof value === 'string' ? `'${value}'` : value
-        clauses.push(`${column_name} ${operator} ${formattedValue}`)
+        if (operator === 'LIKE') {
+          clauses.push(String.raw`${sqlVarable}.${column_name} ${operator} '%${value}%'`)
+        } else {
+          clauses.push(`${sqlVarable}.${column_name} ${operator} ${formattedValue}`)
+        }
       }
     } else {
       // Handle nested filter condition
       const logicalOperatorInner = Object.keys(filter)[0] as LogicalOperator
       const nestedFilters = (filter as NestedFilter)[logicalOperatorInner]
-      const nestedClause = getWhereClause(nestedFilters, logicalOperatorInner)
+      const nestedClause = getWhereClause(nestedFilters, sqlVarable, logicalOperatorInner)
       clauses.push(`(${nestedClause})`)
     }
   }
