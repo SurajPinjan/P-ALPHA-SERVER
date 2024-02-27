@@ -1,7 +1,7 @@
 import Sequelize, { DataTypes, Model } from 'sequelize'
 import { sequelize as seq } from '../../config/sequelizeConfig'
 import { ModelAttributes } from '../../types/databaseTypes'
-import { validateMillSecDate } from '../../services/basicValidators'
+import { validateMillSecDate, validateStringifiedArray } from '../../services/basicValidators'
 import { ValidationResult } from '../../types/validationTypes'
 import { SELECT_VALUES } from '../../types/enums'
 
@@ -10,6 +10,7 @@ export interface XModelAttributes extends ModelAttributes {
   url: string
   columnUText: string
   columnSelect: SELECT_VALUES
+  columnMultiValue: string
 }
 
 export const validateX = function (x: XModelAttributes): ValidationResult {
@@ -18,6 +19,11 @@ export const validateX = function (x: XModelAttributes): ValidationResult {
   if (!validateMillSecDate(x.columnDate)) {
     validationResult.isValid = false
     validationResult.message = validationResult.message?.concat(`invalid columnDate `)
+  }
+
+  if (!validateStringifiedArray(x.columnMultiValue)) {
+    validationResult.isValid = false
+    validationResult.message = validationResult.message?.concat(`invalid columnMultiValue `)
   }
 
   return validationResult
@@ -65,6 +71,10 @@ export const X = seq.define<XModelInstance>(
       type: DataTypes.STRING(255),
       allowNull: true,
       unique: true,
+    },
+    columnMultiValue: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     updateBy: {
       type: DataTypes.STRING(255),

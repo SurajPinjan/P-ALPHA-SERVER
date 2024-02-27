@@ -30,4 +30,21 @@ const validateMillSecDate = function (text: string): boolean {
   return true
 }
 
-export { validatePhone, validateEmail, validateName, validatePassword, validateMillSecDate, validateuid }
+const validateStringifiedArray = function (text: string): boolean {
+  try {
+    const parsed = JSON.parse(text) as string[]
+    return Array.isArray(parsed) && parsed.every((item) => typeof item === 'string')
+  } catch (error) {
+    return false
+  }
+}
+
+export {
+  validateStringifiedArray,
+  validatePhone,
+  validateEmail,
+  validateName,
+  validatePassword,
+  validateMillSecDate,
+  validateuid,
+}
