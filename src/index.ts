@@ -12,7 +12,10 @@ import { router as yRoutesV2 } from './controllers/CRUDControllers/YV2Controller
 import { router as authRoutesV2 } from './controllers/UIControllers/AuthV2Controller'
 import { router as fileRoutesV2 } from './controllers/UIControllers/FileV2Controller'
 import { router as yWithXRoutesV2 } from './controllers/UIControllers/YWithXV2Controller'
+import { router as xDetailWithXRoutesV2 } from './controllers/UIControllers/XDetailWithXV2Controller'
 import { router as masterRoutesV2 } from './controllers/CRUDControllers/MasterV2Controller'
+import { router as xDetailRoutesV2 } from './controllers/CRUDControllers/XDetailV2Controller'
+import { router as MediaRoutesV2 } from './controllers/CRUDControllers/MediaV2Controller'
 import { sequelize } from './config/sequelizeConfig'
 import { generateSecretKey } from './services/cryptoService'
 import { SESSION_NAME } from './types/enums'
@@ -104,7 +107,10 @@ app.use('/app/v2/y', yRoutesV2)
 app.use('/app/v2/auth', authRoutesV2)
 app.use('/app/v2/file', fileRoutesV2)
 app.use('/app/v2/yWithX', yWithXRoutesV2)
+app.use('/app/v2/xDetailWithX', xDetailWithXRoutesV2)
 app.use('/app/v2/master', masterRoutesV2)
+app.use('/app/v2/xDetail', xDetailRoutesV2)
+app.use('/app/v2/media', MediaRoutesV2)
 
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at http://localhost:${PORT}`)

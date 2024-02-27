@@ -11,12 +11,12 @@ export const getallY = async function (
   pageSize?: number,
   pageNumber?: number
 ): Promise<YModelAttributes[]> {
-  const whereClause: string = getWhereClause(filters)
+  const whereClause: string = getWhereClause(filters, 'y')
   const sortClause: string = getSortClause(sorts)
 
   const connection = await connPool.getConnection()
   try {
-    let _query: string = `SELECT * FROM table_y where isDeleted=false ${whereClause} ${sortClause}`
+    let _query: string = `SELECT * FROM table_y y where isDeleted=false ${whereClause} ${sortClause}`
     if (typeof pageSize != 'undefined' && typeof pageNumber != 'undefined') {
       _query = _query.concat(` limit ${pageSize} offset ${pageNumber * pageSize}`)
     }
@@ -29,10 +29,10 @@ export const getallY = async function (
 }
 
 export const getCountY = async function (filters: Filter[]): Promise<number> {
-  const whereClause: string = getWhereClause(filters)
+  const whereClause: string = getWhereClause(filters, 'y')
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `SELECT COUNT(*) as 'count' FROM table_y where isDeleted=false ${whereClause}`
+    const _query: string = `SELECT COUNT(*) as 'count' FROM table_y y where isDeleted=false ${whereClause}`
 
     const [rows] = await connection.execute(_query, [])
     return (rows as { count: number }[])[0].count

@@ -12,10 +12,10 @@ export const getallMaster = async function (
 ): Promise<MasterModelAttributes[]> {
   const connection = await connPool.getConnection()
   try {
-    const whereClause: string = getWhereClause(filters)
+    const whereClause: string = getWhereClause(filters, 'm')
     const sortClause: string = getSortClause(sorts)
 
-    let _query: string = `SELECT * FROM table_master where isDeleted=false ${whereClause} ${sortClause}`
+    let _query: string = `SELECT * FROM table_master m where isDeleted=false ${whereClause} ${sortClause}`
     if (typeof pageSize != 'undefined' && typeof pageNumber != 'undefined') {
       _query = _query.concat(` limit ${pageSize} offset ${pageNumber * pageSize}`)
     }
@@ -29,7 +29,7 @@ export const getallMaster = async function (
 export const getCountMaster = async function (filters: Filter[]): Promise<number> {
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `SELECT COUNT(*) as 'count' FROM table_master where isDeleted=false ${filters}`
+    const _query: string = `SELECT COUNT(*) as 'count' FROM table_master m where isDeleted=false ${filters}`
 
     const [rows] = await connection.execute(_query, [])
     return (rows as { count: number }[])[0].count

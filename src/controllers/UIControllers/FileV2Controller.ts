@@ -14,7 +14,6 @@ router.post(
   uploader.single('file'),
   async (req: Request, res: Response) => {
     const file = req.file as Express.Multer.File
-
     // validate if file exists
     const _isValid: boolean = typeof file != 'undefined'
 

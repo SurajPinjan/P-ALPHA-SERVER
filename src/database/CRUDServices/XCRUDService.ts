@@ -4,6 +4,8 @@ import { getSortClause, getWhereClause } from '../../services/filterEngine'
 import { Filter } from '../../types/filterTypes'
 import { Sort } from '../../types/httpTypes'
 import { XModelAttributes } from '../models/table_x'
+import { XDetailModelAttributes } from '../models/table_xdetail'
+import { createOneXDetail } from './XDetailCRUDService'
 
 export const getallX = async function (
   filters: Filter[],
@@ -11,17 +13,15 @@ export const getallX = async function (
   pageSize?: number,
   pageNumber?: number
 ): Promise<XModelAttributes[]> {
-  const whereClause: string = getWhereClause(filters)
+  const whereClause: string = getWhereClause(filters, 'x')
   const sortClause: string = getSortClause(sorts)
 
   const connection = await connPool.getConnection()
   try {
-    let _query: string = `SELECT * FROM table_x where isDeleted=false ${whereClause} ${sortClause}`
+    let _query: string = `SELECT * FROM table_x x where isDeleted=false ${whereClause} ${sortClause}`
     if (typeof pageSize != 'undefined' && typeof pageNumber != 'undefined') {
       _query = _query.concat(` limit ${pageSize} offset ${pageNumber * pageSize}`)
     }
-
-    console.log(_query)
 
     const [rows] = await connection.query(_query, [])
     return rows as XModelAttributes[]
@@ -31,10 +31,10 @@ export const getallX = async function (
 }
 
 export const getCountX = async function (filters: Filter[]): Promise<number> {
-  const whereClause: string = getWhereClause(filters)
+  const whereClause: string = getWhereClause(filters, 'x')
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `SELECT COUNT(*) as 'count' FROM table_x where isDeleted=false ${whereClause}`
+    const _query: string = `SELECT COUNT(*) as 'count' FROM table_x x where isDeleted=false ${whereClause}`
 
     const [rows] = await connection.execute(_query, [])
     return (rows as { count: number }[])[0].count
@@ -69,6 +69,22 @@ export const createOneX = async function (data: XModelAttributes): Promise<XMode
     ])
     const json: unknown = results
     const newData: XModelAttributes | null = await getOneX((json as { insertId: number }).insertId)
+    if (newData != null && newData.uid) {
+      for (const key in ['A', 'B']) {
+        const xDetail: XDetailModelAttributes | null = await createOneXDetail({
+          x_id: newData.uid,
+          isDeleted: false,
+          columnDetail: ['A', 'B'][key],
+          uid: 0,
+          createBy: 'USER_A',
+        })
+
+        if (xDetail === null) {
+          throw Error('Error Creating X Details')
+        }
+      }
+    }
+
     return newData
   } finally {
     connPool.releaseConnection(connection)

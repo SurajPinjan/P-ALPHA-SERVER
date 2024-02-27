@@ -42,6 +42,20 @@ export enum HTTP_OPERATION {
   UPLOAD = 'upload',
 }
 
+// entity names
+
+export enum ENTITY_NAME {
+  X = 'x',
+  Y = 'y',
+  YWITHX = 'yWithX',
+  XDETAILWITHX = 'xDetailWithX',
+  XDETAIL = 'xDetail',
+  FILE = 'file',
+  AUTH = 'auth',
+  MASTER = 'master',
+  MEDIA = 'media',
+}
+
 // Auth enums
 
 export const SESSION_NAME = 'sixsigma'

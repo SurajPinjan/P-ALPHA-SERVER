@@ -29,10 +29,12 @@ export async function up(knex: Knex): Promise<unknown> {
       UNIQUE KEY username (username)
     ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;`),
 
-    knex.schema.raw(`CREATE TABLE table_filemap (
+    knex.schema.raw(`CREATE TABLE table_media (
           uid int NOT NULL AUTO_INCREMENT,
           fileurl varchar(500) NOT NULL,
-          fileext varchar(50) NOT NULL,
+          filetype varchar(100) NOT NULL,
+          filesize int NOT NULL,
+          filename varchar(1000) NOT NULL,
           entityType varchar(225) DEFAULT NULL,
           entityId int DEFAULT NULL,
           createDate timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -48,7 +50,7 @@ export async function up(knex: Knex): Promise<unknown> {
 
 export async function down(knex: Knex): Promise<unknown> {
   return Promise.all([
-    knex.schema.raw(`DROP TABLE table_filemap;`),
+    knex.schema.raw(`DROP TABLE table_media;`),
     knex.schema.raw(`DROP TABLE table_u;`),
     knex.schema.raw(`DROP TABLE table_x;`),
   ])
