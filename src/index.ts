@@ -9,6 +9,7 @@ import './auth/passportConfig'
 import { router as xRoutes } from './controllers/CRUDControllers/XController'
 import { router as xRoutesV2 } from './controllers/CRUDControllers/XV2Controller'
 import { router as yRoutesV2 } from './controllers/CRUDControllers/YV2Controller'
+import { router as zRoutesV2 } from './controllers/CRUDControllers/ZV2Controller'
 import { router as authRoutesV2 } from './controllers/UIControllers/AuthV2Controller'
 import { router as fileRoutesV2 } from './controllers/UIControllers/FileV2Controller'
 import { router as yWithXRoutesV2 } from './controllers/UIControllers/YWithXV2Controller'
@@ -103,6 +104,7 @@ sequelize
 // api initialize
 app.use('/app/v1/x', xRoutes)
 app.use('/app/v2/x', xRoutesV2)
+app.use('/app/v2/z', zRoutesV2)
 app.use('/app/v2/y', yRoutesV2)
 app.use('/app/v2/auth', authRoutesV2)
 app.use('/app/v2/file', fileRoutesV2)

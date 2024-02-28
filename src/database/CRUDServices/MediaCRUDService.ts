@@ -59,14 +59,15 @@ export const createOneMedia = async function (
 ): Promise<TableMediaModelAttributes | null> {
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `INSERT INTO table_media ( fileurl,filetype,filename,filesize,entityType, entityId,isDeleted) VALUES (?,?,?,?,?,?,?)`
+    const _query: string = `INSERT INTO table_media ( fileurl,filetype,filename,filesize,entityType, entityId,tag,isDeleted) VALUES (?,?,?,?,?,?,?,?)`
     const [results] = await connection.execute(_query, [
-      data.fileurl,
-      data.filetype,
-      data.filename,
-      data.filesize,
+      data.fileurl ? data.fileurl : null,
+      data.filetype ? data.filetype : null,
+      data.filename ? data.filename : null,
+      data.filesize ? data.filesize : null,
       data.entityType,
       data.entityId,
+      data.tag ? data.tag : null,
       data.isDeleted,
     ])
     const json: unknown = results
@@ -82,25 +83,16 @@ export const updateOneMedia = async function (
 ): Promise<TableMediaModelAttributes | null> {
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `UPDATE table_media SET fileurl = ?,filetype = ?,filename = ?,filesize=?,entityType = ?,entityId=?, isDeleted = ? WHERE uid = ?`
+    const _query: string = `UPDATE table_media SET fileurl = ?,filetype = ?,filename = ?,filesize=?,entityType = ?,entityId=?,tag=?, isDeleted = ? WHERE uid = ?`
 
-    console.log([
-      data.fileurl,
-      data.filetype,
-      data.filename,
-      data.filesize,
-      data.entityType,
-      data.entityId,
-      data.isDeleted,
-      data.uid,
-    ])
     await connection.execute(_query, [
-      data.fileurl,
-      data.filetype,
-      data.filename,
-      data.filesize,
+      data.fileurl ? data.fileurl : null,
+      data.filetype ? data.filetype : null,
+      data.filename ? data.filename : null,
+      data.filesize ? data.filesize : null,
       data.entityType,
       data.entityId,
+      data.tag ? data.tag : null,
       data.isDeleted,
       data.uid,
     ])
