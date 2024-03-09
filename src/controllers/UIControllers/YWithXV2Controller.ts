@@ -26,8 +26,8 @@ router.post(`/${HTTP_OPERATION.GET_ALL}`, ensureAuthenticated, async (req: Reque
       const yListCount: number = await getCountYWithX(requestData.filters)
       const responseData: HttpResponseGetAll<YWithXModelAttributes> = {
         data: yList,
-        responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
-        displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+        responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].code,
+        displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].displayMsg,
         totalCount: yListCount,
       }
       res.status(200).json(responseData)

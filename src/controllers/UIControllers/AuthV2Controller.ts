@@ -37,8 +37,8 @@ router.post(`/${HTTP_OPERATION.LOGIN}`, async (req: Request, res: Response, next
       return res.status(200).send({
         token: req.sessionID,
         userInfo: user,
-        responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
-        displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+        responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].code,
+        displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].displayMsg,
       } as HttpResponseLogin)
     })
   })(req, res, next)
@@ -52,8 +52,8 @@ router.post(`/${HTTP_OPERATION.LOGOUT}`, ensureAuthenticated, (req: Request, res
     (err: Error) => {
       if (!err) {
         return res.status(400).send({
-          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
-          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].displayMsg,
         } as HttpResponseBody)
       }
     }

@@ -38,8 +38,8 @@ const getAll = <ModelAttributes>(
         const xListCount: number = await getCount(requestData.filters)
         const responseData: HttpResponseGetAll<ModelAttributes> = {
           data: xList,
-          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
-          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].displayMsg,
           totalCount: xListCount,
         }
         res.status(200).json(responseData)
@@ -78,8 +78,8 @@ const getOne = <ModelAttributes>(getone: (uid: number) => Promise<ModelAttribute
         } else {
           const responseData: HttpResponseGetOne<ModelAttributes> = {
             data: x,
-            responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
-            displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+            responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].code,
+            displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].displayMsg,
           }
           res.status(200).json(responseData)
         }
@@ -120,8 +120,8 @@ const createOne = <ModelAttributes>(
         } else {
           const responseData: HttpResponseCreateOne<ModelAttributes> = {
             data: x,
-            responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
-            displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+            responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_CREATE].code,
+            displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_CREATE].displayMsg,
           }
           res.status(200).json(responseData)
         }
@@ -160,8 +160,8 @@ const updateOne = <ModelAttributes>(
         } else {
           const responseData: HttpResponseGetOne<ModelAttributes> = {
             data: x,
-            responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
-            displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+            responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_UPDATE].code,
+            displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_UPDATE].displayMsg,
           }
           res.status(200).json(responseData)
         }

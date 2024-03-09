@@ -34,8 +34,8 @@ router.post(`/${HTTP_OPERATION.GET_ALL}`, isAuthenticatedAdmin, async (req: Requ
       const xListCount: number = await X.count({})
       const responseData: HttpResponseGetAll<XModelInstance> = {
         data: xList,
-        responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
-        displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+        responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].code,
+        displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].displayMsg,
         totalCount: xListCount,
       }
       res.status(200).json(responseData)
@@ -72,8 +72,8 @@ router.post(`/${HTTP_OPERATION.GET_ONE}`, isAuthenticatedAdmin, async (req: Requ
       } else {
         const responseData: HttpResponseGetOne<XModelInstance> = {
           data: x,
-          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
-          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].displayMsg,
         }
         res.status(200).json(responseData)
       }
@@ -108,8 +108,8 @@ router.post(`/${HTTP_OPERATION.CREATE_ONE}`, isAuthenticatedAdmin, async (req: R
       } else {
         const responseData: HttpResponseCreateOne<XModelInstance> = {
           data: x,
-          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
-          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_CREATE].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_CREATE].displayMsg,
         }
         res.status(200).json(responseData)
       }
@@ -149,8 +149,8 @@ router.post(`/${HTTP_OPERATION.UPDATE_ONE}`, isAuthenticatedAdmin, async (req: R
       } else {
         const responseData: HttpResponseCreateOne<XModelInstance> = {
           data: updatedX,
-          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].code,
-          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS].displayMsg,
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_UPDATE].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_UPDATE].displayMsg,
         }
         res.status(200).json(responseData)
       }

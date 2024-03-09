@@ -1,5 +1,7 @@
 export enum API_RESPONSE_CODE {
-  SUCCESS,
+  SUCCESS_GEN,
+  SUCCESS_CREATE,
+  SUCCESS_UPDATE,
   ERROR,
   NOT_FOUND,
   REQUEST_INVALID,
@@ -12,7 +14,9 @@ export enum API_RESPONSE_CODE {
 }
 
 export const API_RESPONSE_MAP: Record<API_RESPONSE_CODE, { code: string; displayMsg: string }> = {
-  [API_RESPONSE_CODE.SUCCESS]: { code: 'S001', displayMsg: 'Operation successful' },
+  [API_RESPONSE_CODE.SUCCESS_GEN]: { code: 'S001', displayMsg: 'Operation successful' },
+  [API_RESPONSE_CODE.SUCCESS_CREATE]: { code: 'S002', displayMsg: 'Create successful' },
+  [API_RESPONSE_CODE.SUCCESS_UPDATE]: { code: 'S003', displayMsg: 'Update successful' },
   [API_RESPONSE_CODE.ERROR]: { code: 'ER001', displayMsg: 'An error occurred. Please try again later.' },
   [API_RESPONSE_CODE.NOT_FOUND]: { code: 'ER002', displayMsg: 'The requested resource was not found.' },
   [API_RESPONSE_CODE.REQUEST_INVALID]: { code: 'ER003', displayMsg: 'Invalid request. Please check your input.' },
