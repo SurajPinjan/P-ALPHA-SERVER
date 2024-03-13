@@ -18,6 +18,10 @@ import { router as xDetailWithXRoutesV2 } from './controllers/UIControllers/XDet
 import { router as masterRoutesV2 } from './controllers/CRUDControllers/MasterV2Controller'
 import { router as xDetailRoutesV2 } from './controllers/CRUDControllers/XDetailV2Controller'
 import { router as MediaRoutesV2 } from './controllers/CRUDControllers/MediaV2Controller'
+import { router as RoleRoutesV2 } from './controllers/CRUDControllers/RoleV2Controller'
+import { router as PermissionRoutesV2 } from './controllers/CRUDControllers/PermissionV2Controller'
+import { router as DefaultPermsRoutesV2 } from './controllers/CRUDControllers/DefaultPermsV2Controller'
+import { router as RoleDefaultPermsRoutesV2 } from './controllers/UIControllers/RoleDefaultPermV2Controller'
 import { sequelize } from './config/sequelizeConfig'
 import { generateSecretKey } from './services/cryptoService'
 import { SESSION_NAME } from './types/enums'
@@ -115,6 +119,10 @@ app.use('/app/v2/xDetailWithX', xDetailWithXRoutesV2)
 app.use('/app/v2/master', masterRoutesV2)
 app.use('/app/v2/xDetail', xDetailRoutesV2)
 app.use('/app/v2/media', MediaRoutesV2)
+app.use('/app/v2/role', RoleRoutesV2)
+app.use('/app/v2/permission', PermissionRoutesV2)
+app.use('/app/v2/defaultperms', DefaultPermsRoutesV2)
+app.use('/app/v2/roledefaultperms', RoleDefaultPermsRoutesV2)
 
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at http://localhost:${PORT}`)

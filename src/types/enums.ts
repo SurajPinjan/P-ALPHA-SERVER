@@ -52,6 +52,10 @@ export enum ENTITY_NAME {
   X = 'x',
   Y = 'y',
   Z = 'z',
+  ROLE = 'role',
+  PERMISSION = 'permission',
+  DEFAULTPERMS = 'defaultperms',
+  ROLEDEFAULTPERMS = 'roledefaultperms',
   YWITHX = 'yWithX',
   XDETAILWITHX = 'xDetailWithX',
   XDETAIL = 'xDetail',
@@ -70,6 +74,13 @@ export const SESSION_NAME = 'sixsigma'
 
 export enum AUTH_STRATEGIES {
   LOCAL = 'local',
+}
+
+// permission types
+
+export enum PERMISSION_TYPES {
+  READ_ONLY = 'read',
+  WRITE = 'write',
 }
 
 // Roles
