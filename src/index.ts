@@ -105,6 +105,7 @@ export const getldapClientGlobal = () => {
   if (ldapClientGlobal) {
     return ldapClientGlobal
   } else {
+    console.log('LDAP expired')
     ldapClientGlobal = createClient({
       tlsOptions: { rejectUnauthorized: false },
       url: `${LDAP_PROTOCOL}://${LDAP_SERVER_HOST}:${LDAP_SERVER_PORT}`,
