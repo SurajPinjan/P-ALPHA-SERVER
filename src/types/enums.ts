@@ -1,4 +1,5 @@
 export enum API_RESPONSE_CODE {
+  LDAP_LOGIN_SUCCESS,
   SUCCESS_GEN,
   SUCCESS_CREATE,
   SUCCESS_UPDATE,
@@ -17,6 +18,7 @@ export const API_RESPONSE_MAP: Record<API_RESPONSE_CODE, { code: string; display
   [API_RESPONSE_CODE.SUCCESS_GEN]: { code: 'S001', displayMsg: 'Operation successful' },
   [API_RESPONSE_CODE.SUCCESS_CREATE]: { code: 'S002', displayMsg: 'Create successful' },
   [API_RESPONSE_CODE.SUCCESS_UPDATE]: { code: 'S003', displayMsg: 'Update successful' },
+  [API_RESPONSE_CODE.LDAP_LOGIN_SUCCESS]: { code: 'S004', displayMsg: 'LDAP Login successful' },
   [API_RESPONSE_CODE.ERROR]: { code: 'ER001', displayMsg: 'An error occurred. Please try again later.' },
   [API_RESPONSE_CODE.NOT_FOUND]: { code: 'ER002', displayMsg: 'The requested resource was not found.' },
   [API_RESPONSE_CODE.REQUEST_INVALID]: { code: 'ER003', displayMsg: 'Invalid request. Please check your input.' },
@@ -41,6 +43,7 @@ export enum HTTP_OPERATION {
   // AUTH
   LOGIN = 'login',
   LOGOUT = 'logout',
+  LDAP_LOGIN = 'ldaplogin',
 
   // FILE
   UPLOAD = 'upload',

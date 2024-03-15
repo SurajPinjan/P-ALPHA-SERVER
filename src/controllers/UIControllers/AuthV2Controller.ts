@@ -4,6 +4,7 @@ import { ensureAuthenticated } from '../../auth/passportConfig'
 import { UModelAttributes } from '../../database/models/table_u'
 import { API_RESPONSE_CODE, API_RESPONSE_MAP, AUTH_STRATEGIES, HTTP_OPERATION } from '../../types/enums'
 import { HttpErrorResponseBody, HttpResponseBody, HttpResponseLogin } from '../../types/httpTypes'
+import { loginLDAP } from '../../database/UIServices/LoginService'
 
 export const router = express.Router()
 
@@ -44,6 +45,30 @@ router.post(`/${HTTP_OPERATION.LOGIN}`, async (req: Request, res: Response, next
   })(req, res, next)
 })
 
+router.post(`/${HTTP_OPERATION.LDAP_LOGIN}`, async (req: Request, resposne: Response) => {
+  const requestData: { username: string; password: string } = req.body
+
+  return loginLDAP(requestData.username, requestData.password, (err: Error | null) => {
+    try {
+      if (err !== null) {
+        throw err
+      } else {
+        return resposne.status(200).send({
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.LDAP_LOGIN_SUCCESS].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.LDAP_LOGIN_SUCCESS].displayMsg,
+        } as HttpResponseBody)
+      }
+    } catch (error) {
+      if (error instanceof Error)
+        return resposne.status(500).json({
+          responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_RETRIEVING_DATA].code,
+          displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_RETRIEVING_DATA].displayMsg,
+          errorMessage: error.message,
+        } as HttpErrorResponseBody)
+    }
+  })
+})
+
 router.post(`/${HTTP_OPERATION.LOGOUT}`, ensureAuthenticated, (req: Request, res: Response) => {
   req.logout(
     {
@@ -51,7 +76,7 @@ router.post(`/${HTTP_OPERATION.LOGOUT}`, ensureAuthenticated, (req: Request, res
     },
     (err: Error) => {
       if (!err) {
-        return res.status(400).send({
+        return res.status(200).send({
           responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].code,
           displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].displayMsg,
         } as HttpResponseBody)

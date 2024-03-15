@@ -1,4 +1,4 @@
-import { connPool } from '../..'
+import { connPool, getldapClientGlobal } from '../..'
 import { UModelAttributes } from '../models/table_u'
 
 export const getUByUsername = async function (username: string): Promise<UModelAttributes | null> {
@@ -12,4 +12,8 @@ export const getUByUsername = async function (username: string): Promise<UModelA
   } finally {
     connPool.releaseConnection(connection)
   }
+}
+
+export const loginLDAP = (username: string, password: string, callback: (err: Error | null) => unknown): void => {
+  return getldapClientGlobal().bind(`${username}@titan.com`, password, callback)
 }

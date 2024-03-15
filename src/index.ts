@@ -26,10 +26,14 @@ import { sequelize } from './config/sequelizeConfig'
 import { generateSecretKey } from './services/cryptoService'
 import { SESSION_NAME } from './types/enums'
 import logger from './config/winston-config'
+import { Client, createClient } from 'ldapjs'
 
 dotenv.config()
 
 // get environment values
+const LDAP_SERVER_HOST: string = process.env.LDAP_SERVER_HOST ? process.env.LDAP_SERVER_HOST : 'localhost'
+const LDAP_SERVER_PORT: string = process.env.LDAP_SERVER_PORT ? process.env.LDAP_SERVER_PORT : '636'
+const LDAP_PROTOCOL: string = process.env.LDAP_PROTOCOL ? process.env.LDAP_PROTOCOL : 'ldaps'
 const PORT: string = process.env.PORT ? process.env.PORT : '3000'
 const CLIENT_PORT: string = process.env.CLIENT_PORT ? process.env.CLIENT_PORT : '5173'
 const DB_HOST: string = process.env.DB_HOST ? process.env.DB_HOST : 'localhost'
@@ -92,6 +96,22 @@ app.use(
 
 app.use(passport.initialize())
 app.use(passport.session())
+
+// ldap initialize
+let ldapClientGlobal: Client
+
+// ldap initialize
+export const getldapClientGlobal = () => {
+  if (ldapClientGlobal) {
+    return ldapClientGlobal
+  } else {
+    ldapClientGlobal = createClient({
+      tlsOptions: { rejectUnauthorized: false },
+      url: `${LDAP_PROTOCOL}://${LDAP_SERVER_HOST}:${LDAP_SERVER_PORT}`,
+    })
+    return ldapClientGlobal
+  }
+}
 
 // database initialize
 export const connPool = pool
