@@ -3,9 +3,11 @@ import { connPool } from '../..'
 import { getSortClause, getWhereClause } from '../../services/filterEngine'
 import { Filter } from '../../types/filterTypes'
 import { Sort } from '../../types/httpTypes'
-import { XModelAttributes } from '../models/table_x'
+import { FullXModelAttributes, XModelAttributes } from '../models/table_x'
 import { XDetailModelAttributes } from '../models/table_xdetail'
+import { YModelAttributes } from '../models/table_y'
 import { createOneXDetail } from './XDetailCRUDService'
+import { getOneY, getallY } from './YCRUDService'
 
 export const getallX = async function (
   filters: Filter[],
@@ -109,6 +111,28 @@ export const updateOneX = async function (data: XModelAttributes): Promise<XMode
 
     const updatedData: XModelAttributes | null = await getOneX(data.uid)
     return updatedData
+  } finally {
+    connPool.releaseConnection(connection)
+  }
+}
+
+export const getOneFullX = async function (xid: number): Promise<FullXModelAttributes | null> {
+  const connection = await connPool.getConnection()
+  try {
+    const _x: XModelAttributes | null = await getOneX(xid)
+    if (_x != null) {
+      const yList: YModelAttributes[] = await getallY([], [], undefined, undefined)
+      const yListFull: YModelAttributes[] = []
+      for (const y of yList) {
+        const yFull: YModelAttributes | null = await getOneY(y.uid)
+        if (yFull != null) {
+          yListFull.push(yFull)
+        }
+      }
+      return { ..._x, yList: yListFull }
+    } else {
+      return null
+    }
   } finally {
     connPool.releaseConnection(connection)
   }

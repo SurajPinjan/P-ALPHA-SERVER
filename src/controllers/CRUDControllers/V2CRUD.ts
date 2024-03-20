@@ -95,6 +95,46 @@ const getOne = <ModelAttributes>(getone: (uid: number) => Promise<ModelAttribute
   }
 }
 
+const getOneFull = <FullModelAttributes>(getoneFull: (uid: number) => Promise<FullModelAttributes | null>) => {
+  return async (req: Request, res: Response) => {
+    const requestData: HttpGetOneRequestBody = req.body
+    // add validations for body
+    let _isValid: boolean = true
+
+    _isValid = _isValid && validateuid(requestData.uid)
+
+    if (!_isValid) {
+      invalidRequest(res, `invalid uid`)
+    } else {
+      try {
+        const x: FullModelAttributes | null = await getoneFull(requestData.uid)
+        if (x == null) {
+          const responseData: HttpErrorResponseBody = {
+            responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.NOT_FOUND].code,
+            displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.NOT_FOUND].displayMsg,
+            errorMessage: '-',
+          }
+          res.status(200).json(responseData)
+        } else {
+          const responseData: HttpResponseGetOne<FullModelAttributes> = {
+            data: x,
+            responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].code,
+            displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].displayMsg,
+          }
+          res.status(200).json(responseData)
+        }
+      } catch (error: unknown) {
+        if (error instanceof Error)
+          res.status(200).json({
+            responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_RETRIEVING_DATA].code,
+            displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_RETRIEVING_DATA].displayMsg,
+            errorMessage: error.message,
+          } as HttpErrorResponseBody)
+      }
+    }
+  }
+}
+
 const createOne = <ModelAttributes>(
   createone: (data: ModelAttributes) => Promise<ModelAttributes | null>,
   validate: (x: ModelAttributes) => ValidationResult
@@ -177,4 +217,4 @@ const updateOne = <ModelAttributes>(
   }
 }
 
-export { getAll, getOne, createOne, updateOne }
+export { getAll, getOne, getOneFull, createOne, updateOne }

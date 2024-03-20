@@ -85,4 +85,11 @@ router.post(`/${HTTP_OPERATION.LOGOUT}`, ensureAuthenticated, (req: Request, res
   )
 })
 
+router.post(`/${HTTP_OPERATION.PING}`, ensureAuthenticated, (req: Request, res: Response) => {
+  res.status(200).json({
+    responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_PING].code,
+    displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_PING].displayMsg,
+  })
+})
+
 export default router

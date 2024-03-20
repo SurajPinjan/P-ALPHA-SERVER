@@ -2,7 +2,7 @@
 npm run dev
 ```
 
-This will start the server at `http://localhost:3000` by default. You can change the port in the `src/index.ts` file or create an `.env` file to manage the environt-specific variables separately.
+This will start the server at `http://localhost:3001` by default. You can change the port in the `src/index.ts` file or create an `.env` file to manage the environt-specific variables separately.
 
 For production, you can build the TypeScript files and then start the server. Run the following commands:
 

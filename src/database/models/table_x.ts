@@ -1,9 +1,10 @@
 import Sequelize, { DataTypes, Model } from 'sequelize'
 import { sequelize as seq } from '../../config/sequelizeConfig'
-import { ModelAttributes } from '../../types/databaseTypes'
 import { validateMillSecDate, validateStringifiedArray } from '../../services/basicValidators'
-import { ValidationResult } from '../../types/validationTypes'
+import { ModelAttributes } from '../../types/databaseTypes'
 import { SELECT_VALUES } from '../../types/enums'
+import { ValidationResult } from '../../types/validationTypes'
+import { FullYAttributes } from './table_y'
 
 export interface XModelAttributes extends ModelAttributes {
   columnDate: string
@@ -29,7 +30,6 @@ export const validateX = function (x: XModelAttributes): ValidationResult {
   return validationResult
 }
 
-// sequelize code
 export interface XModelInstance extends Model<XModelAttributes>, XModelAttributes {}
 
 export const X = seq.define<XModelInstance>(
@@ -99,3 +99,9 @@ export const X = seq.define<XModelInstance>(
     ],
   }
 )
+
+export interface FullXModelAttributes extends XModelAttributes {
+  yList: FullYAttributes[]
+}
+
+export interface FullXModelInstance extends Model<FullXModelAttributes>, FullXModelAttributes {}

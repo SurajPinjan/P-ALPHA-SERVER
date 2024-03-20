@@ -12,7 +12,6 @@ import { router as yRoutesV2 } from './controllers/CRUDControllers/YV2Controller
 import { router as zRoutesV2 } from './controllers/CRUDControllers/ZV2Controller'
 import { router as authRoutesV2 } from './controllers/UIControllers/AuthV2Controller'
 import { router as fileRoutesV2 } from './controllers/UIControllers/FileV2Controller'
-import { router as fullXRoutesV2 } from './controllers/UIControllers/FullXV2Controller'
 import { router as yWithXRoutesV2 } from './controllers/UIControllers/YWithXV2Controller'
 import { router as xDetailWithXRoutesV2 } from './controllers/UIControllers/XDetailWithXV2Controller'
 import { router as masterRoutesV2 } from './controllers/CRUDControllers/MasterV2Controller'
@@ -34,7 +33,7 @@ dotenv.config()
 const LDAP_SERVER_HOST: string = process.env.LDAP_SERVER_HOST ? process.env.LDAP_SERVER_HOST : 'localhost'
 const LDAP_SERVER_PORT: string = process.env.LDAP_SERVER_PORT ? process.env.LDAP_SERVER_PORT : '636'
 const LDAP_PROTOCOL: string = process.env.LDAP_PROTOCOL ? process.env.LDAP_PROTOCOL : 'ldaps'
-const PORT: string = process.env.PORT ? process.env.PORT : '3000'
+const PORT: string = process.env.PORT ? process.env.PORT : '3001'
 const CLIENT_PORT: string = process.env.CLIENT_PORT ? process.env.CLIENT_PORT : '5173'
 const DB_HOST: string = process.env.DB_HOST ? process.env.DB_HOST : 'localhost'
 const DB_USER: string = process.env.DB_USER ? process.env.DB_USER : 'root'
@@ -134,7 +133,6 @@ app.use('/app/v2/z', zRoutesV2)
 app.use('/app/v2/y', yRoutesV2)
 app.use('/app/v2/auth', authRoutesV2)
 app.use('/app/v2/file', fileRoutesV2)
-app.use('/app/v2/fullX', fullXRoutesV2)
 app.use('/app/v2/yWithX', yWithXRoutesV2)
 app.use('/app/v2/xDetailWithX', xDetailWithXRoutesV2)
 app.use('/app/v2/master', masterRoutesV2)

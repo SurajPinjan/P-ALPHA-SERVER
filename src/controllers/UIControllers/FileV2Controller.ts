@@ -23,7 +23,7 @@ router.post(
       try {
         res.status(200).json({
           responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.SUCCESS_GEN].code,
-          url: `http://localhost:3000/uploads/${file.originalname}`,
+          url: `http://localhost:3001/uploads/${file.originalname}`,
         } as HttpUploadResponseBody)
       } catch (error: unknown) {
         if (error instanceof Error) {

@@ -77,3 +77,5 @@ export const Y = seq.define<YModelInstance>(
     ],
   }
 )
+
+export interface FullYAttributes extends YModelAttributes {}
