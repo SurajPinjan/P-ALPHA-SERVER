@@ -14,6 +14,7 @@ import { router as authRoutesV2 } from './controllers/UIControllers/AuthV2Contro
 import { router as fileRoutesV2 } from './controllers/UIControllers/FileV2Controller'
 import { router as yWithXRoutesV2 } from './controllers/UIControllers/YWithXV2Controller'
 import { router as xDetailWithXRoutesV2 } from './controllers/UIControllers/XDetailWithXV2Controller'
+import { router as reportV2 } from './controllers/UIControllers/ReportV2Controller'
 import { router as masterRoutesV2 } from './controllers/CRUDControllers/MasterV2Controller'
 import { router as xDetailRoutesV2 } from './controllers/CRUDControllers/XDetailV2Controller'
 import { router as MediaRoutesV2 } from './controllers/CRUDControllers/MediaV2Controller'
@@ -81,6 +82,7 @@ app.use(
       user: DB_USER,
       password: DB_PASSWORD,
       database: DB_NAME,
+      debug: false,
     }),
     cookie: {
       path: '/',
@@ -97,18 +99,43 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // ldap initialize
-let ldapClientGlobal: Client
+let ldapClientGlobal: Client | undefined
 
+// ldap initialize
 // ldap initialize
 export const getldapClientGlobal = () => {
   if (ldapClientGlobal) {
     return ldapClientGlobal
   } else {
-    console.log('LDAP expired')
     ldapClientGlobal = createClient({
       tlsOptions: { rejectUnauthorized: false },
       url: `${LDAP_PROTOCOL}://${LDAP_SERVER_HOST}:${LDAP_SERVER_PORT}`,
     })
+
+    ldapClientGlobal.on('error', (err) => {
+      logger.error('LDAP Connection Error', { error: err })
+      ldapClientGlobal = undefined
+    })
+
+    ldapClientGlobal.on('connect', () => {
+      logger.info('LDAP Connection Success')
+    })
+
+    ldapClientGlobal.on('end', () => {
+      logger.info('LDAP Connection End')
+      ldapClientGlobal = undefined
+    })
+
+    ldapClientGlobal.on('close', () => {
+      logger.info('LDAP Connection Close')
+      ldapClientGlobal = undefined
+    })
+
+    ldapClientGlobal.on('timeout', () => {
+      logger.info('LDAP Connection Timeout')
+      ldapClientGlobal = undefined
+    })
+
     return ldapClientGlobal
   }
 }
@@ -142,6 +169,7 @@ app.use('/app/v2/role', RoleRoutesV2)
 app.use('/app/v2/permission', PermissionRoutesV2)
 app.use('/app/v2/defaultperms', DefaultPermsRoutesV2)
 app.use('/app/v2/roledefaultperms', RoleDefaultPermsRoutesV2)
+app.use('/app/v2/report', reportV2)
 
 app.listen(PORT, () => {
   console.log(`[server]: Server is running at http://localhost:${PORT}`)

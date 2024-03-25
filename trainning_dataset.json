@@ -207,6 +207,10 @@
     {
       "requirement": "We required samples of All group details where Analysis: BB_ORGANISM_USED_1 is used. Provided list was only from PRD, we required from both Production and Training environment. Please share list of PRD and Training samples of All group details where Analysis: BB_ORGANISM_USED_1 is used. [Sample ID Text ID Analysis Template Login Date Login By]",
       "sql_query": "select distinct s.SAMPLE_NUMBER, s.TEXT_ID, r.ANALYSIS, s.TEMPLATE, s.LOGIN_BY, s.LOGIN_DATE from sample s, Result r, ANALYSIS a where r.SAMPLE_NUMBER = s.SAMPLE_NUMBER and r.ANALYSIS = a.NAME and a.DESCRIPTION like '%ORGANISM%USED%' and s.TEXT_ID like 'BB%';"
+    },
+    {
+      "requirement": "what are columns of analysis table in LIMS",
+      "sql_query": "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'ANALYSIS';"
     }
   ]
 }

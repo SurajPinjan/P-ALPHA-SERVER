@@ -60,6 +60,7 @@ export enum ENTITY_NAME {
   Y = 'y',
   Z = 'z',
   ROLE = 'role',
+  REPORT = 'report',
   PERMISSION = 'permission',
   DEFAULTPERMS = 'defaultperms',
   ROLEDEFAULTPERMS = 'roledefaultperms',
