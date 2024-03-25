@@ -1,4 +1,4 @@
-import { UModelAttributes } from '../database/models/table_u'
+import { FullUserAttributes } from '../database/models/table_u'
 import { SortDirections } from './enums'
 import { Filter } from './filterTypes'
 
@@ -59,10 +59,10 @@ export type HttpResponseCreateOne<T> = HttpResponseBody & {
 
 export type HttpResponseLogin = HttpResponseBody & {
   token: string
-  userInfo: UModelAttributes
+  userInfo: FullUserAttributes
 }
 
 export interface PassportRequest extends Request {
   isAuthenticated: () => boolean
-  user: UModelAttributes
+  user: FullUserAttributes
 }

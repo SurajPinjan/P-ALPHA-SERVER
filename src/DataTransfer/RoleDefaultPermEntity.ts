@@ -1,7 +1,7 @@
+import { PermissionModelAttributes } from './../database/models/table_permissions'
 import { Model } from 'sequelize'
-import { DefaultPermsModelAttributes } from '../database/models/table_default_perms'
 
-export interface RoleDefaultPermEntityAttributes extends DefaultPermsModelAttributes {
+export interface RoleDefaultPermEntityAttributes extends PermissionModelAttributes {
   dp_uid: number | null
 }
 

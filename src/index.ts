@@ -6,6 +6,7 @@ import passport from 'passport'
 import { v4 as uuidv4 } from 'uuid'
 import pool from './config/mysqlConnPool'
 import './auth/passportConfig'
+import { router as UserV2 } from './controllers/CRUDControllers/UserV2Controller'
 import { router as xRoutes } from './controllers/CRUDControllers/XController'
 import { router as xRoutesV2 } from './controllers/CRUDControllers/XV2Controller'
 import { router as yRoutesV2 } from './controllers/CRUDControllers/YV2Controller'
@@ -160,6 +161,7 @@ app.use('/app/v2/z', zRoutesV2)
 app.use('/app/v2/y', yRoutesV2)
 app.use('/app/v2/auth', authRoutesV2)
 app.use('/app/v2/file', fileRoutesV2)
+app.use('/app/v2/user', UserV2)
 app.use('/app/v2/yWithX', yWithXRoutesV2)
 app.use('/app/v2/xDetailWithX', xDetailWithXRoutesV2)
 app.use('/app/v2/master', masterRoutesV2)

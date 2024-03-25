@@ -3,13 +3,19 @@ import { sequelize as seq } from '../../config/sequelizeConfig'
 import { validateName, validatePassword } from '../../services/basicValidators'
 import { ModelAttributes } from '../../types/databaseTypes'
 import { ValidationResult } from '../../types/validationTypes'
-import { USER_ROLES } from '../../types/enums'
+import { RoleDefaultPermEntityAttributes } from '../../DataTransfer/RoleDefaultPermEntity'
 
 export interface UModelAttributes extends ModelAttributes, Express.User {
   username: string
   passwordHash: string
   password?: string //transient
-  urole: USER_ROLES
+  role_id: number | null
+}
+
+export interface FullUserAttributes extends UModelAttributes {
+  // others
+  role_name: string
+  permissions?: RoleDefaultPermEntityAttributes[]
 }
 
 export const validateU = function (u: UModelAttributes): ValidationResult {
@@ -40,9 +46,9 @@ export const U = seq.define<UModelInstance>(
       allowNull: false,
       primaryKey: true,
     },
-    urole: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
+    role_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
       unique: false,
     },
     username: {

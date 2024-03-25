@@ -63,7 +63,7 @@ export function isAuthenticatedAdmin(req: unknown, res: unknown, next: NextFunct
       displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_INVALID_TOKEN].displayMsg,
       errorMessage: `Token is invalid`,
     } as HttpErrorResponseBody)
-  } else if (reqAuth.user.urole !== USER_ROLES.ADMIN) {
+  } else if (reqAuth.user.role_name !== USER_ROLES.ADMIN) {
     return resAuth.status(400).send({
       responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_INVALID_ROLE].code,
       displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_INVALID_ROLE].displayMsg,
