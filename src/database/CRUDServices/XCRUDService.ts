@@ -61,15 +61,18 @@ export const getOneX = async function (uid: number): Promise<XModelAttributes | 
 export const createOneX = async function (data: XModelAttributes): Promise<XModelAttributes | null> {
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `INSERT INTO table_x (columnMultiValue,columnUText,columnDate,columnSelect, url, isDeleted) VALUES (?,?,?,?,?,?)`
+    const _query: string = `INSERT INTO table_x (columnMultiValue,columnUText,columnNumber,columnDate,columnSelect,createBy, url, isDeleted) VALUES (?,?,?,?,?,?,?,?)`
     const [results] = await connection.execute(_query, [
       data.columnMultiValue,
       data.columnUText,
+      data.columnNumber,
       data.columnDate,
       data.columnSelect,
+      data.createBy,
       data.url,
       data.isDeleted,
     ])
+
     const json: unknown = results
     const newData: XModelAttributes | null = await getOneX((json as { insertId: number }).insertId)
     if (newData != null && newData.uid) {
@@ -97,9 +100,10 @@ export const createOneX = async function (data: XModelAttributes): Promise<XMode
 export const updateOneX = async function (data: XModelAttributes): Promise<XModelAttributes | null> {
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `UPDATE table_x SET columnMultiValue = ?, columnUText = ?,columnDate = ?,columnSelect=?,url = ?, isDeleted = ? WHERE uid = ?`
+    const _query: string = `UPDATE table_x SET columnNumber = ?,columnMultiValue = ?, columnUText = ?,columnDate = ?,columnSelect=?,url = ?, isDeleted = ? WHERE uid = ?`
 
     await connection.execute(_query, [
+      data.columnNumber,
       data.columnMultiValue,
       data.columnUText,
       data.columnDate,

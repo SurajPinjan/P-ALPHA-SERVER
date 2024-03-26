@@ -4,6 +4,7 @@ export async function up(knex: Knex): Promise<unknown> {
   return Promise.all([
     knex.schema.raw(`CREATE TABLE table_x (
       uid int NOT NULL AUTO_INCREMENT,
+      columnNumber int DEFAULT NULL,
       columnDate tinytext,
       url varchar(500) DEFAULT NULL,
       createDate timestamp NULL DEFAULT CURRENT_TIMESTAMP,

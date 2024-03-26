@@ -8,6 +8,7 @@ import { FullYAttributes } from './table_y'
 
 export interface XModelAttributes extends ModelAttributes {
   columnDate: string
+  columnNumber: number
   url: string
   columnUText: string
   columnSelect: SELECT_VALUES
@@ -43,6 +44,10 @@ export const X = seq.define<XModelInstance>(
     },
     columnDate: {
       type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    columnNumber: {
+      type: DataTypes.NUMBER,
       allowNull: true,
     },
     columnSelect: {
