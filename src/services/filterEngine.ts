@@ -46,6 +46,8 @@ function getSortClause(sorts: Sort[]): string {
     clauses.push(`${sort.field} ${sort.sort}`)
   }
 
+  clauses.push(`createDate DESC`)
+
   const resp: string = clauses.join(', ')
   return ` ${resp === '' ? '' : 'ORDER BY '} ${resp}`
   return resp
