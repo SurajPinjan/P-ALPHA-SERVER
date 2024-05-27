@@ -5,6 +5,7 @@ export async function up(knex: Knex): Promise<unknown> {
     knex.schema.raw(`CREATE TABLE table_z (
       uid int NOT NULL AUTO_INCREMENT,
       columnText varchar(500) DEFAULT NULL,
+      monthColumn varchar(255) DEFAULT NULL,
       createDate timestamp NULL DEFAULT CURRENT_TIMESTAMP,
       createBy varchar(255) DEFAULT NULL,
       updateDate timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

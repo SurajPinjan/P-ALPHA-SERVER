@@ -60,8 +60,8 @@ export const getOneZ = async function (uid: number): Promise<ZModelAttributes | 
 export const createOneZ = async function (data: ZModelAttributes): Promise<ZModelAttributes | null> {
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `INSERT INTO table_z (columnText, isDeleted) VALUES (?,?)`
-    const [results] = await connection.execute(_query, [data.columnText, data.isDeleted])
+    const _query: string = `INSERT INTO table_z (monthColumn, columnText, isDeleted) VALUES (?,?,?)`
+    const [results] = await connection.execute(_query, [data.monthColumn, data.columnText, data.isDeleted])
     const json: unknown = results
     const newData: ZModelAttributes | null = await getOneZ((json as { insertId: number }).insertId)
     if (newData != null && newData.uid) {
@@ -89,9 +89,9 @@ export const createOneZ = async function (data: ZModelAttributes): Promise<ZMode
 export const updateOneZ = async function (data: ZModelAttributes): Promise<ZModelAttributes | null> {
   const connection = await connPool.getConnection()
   try {
-    const _query: string = `UPDATE table_z SET columnText = ?, isDeleted = ? WHERE uid = ?`
+    const _query: string = `UPDATE table_z SET monthColumn = ?, columnText = ?, isDeleted = ? WHERE uid = ?`
 
-    await connection.execute(_query, [data.columnText, data.isDeleted, data.uid])
+    await connection.execute(_query, [data.monthColumn, data.columnText, data.isDeleted, data.uid])
 
     const updatedData: ZModelAttributes | null = await getOneZ(data.uid)
     return updatedData

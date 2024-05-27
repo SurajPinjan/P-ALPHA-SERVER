@@ -6,6 +6,7 @@ import { ValidationResult } from '../../types/validationTypes'
 
 export interface ZModelAttributes extends ModelAttributes {
   columnText: string
+  monthColumn: string
 }
 
 export const validateZ = function (z: ZModelAttributes): ValidationResult {
@@ -30,6 +31,10 @@ export const Z = seq.define<ZModelInstance>(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+    },
+    monthColumn: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     columnText: {
       type: DataTypes.TEXT,
