@@ -3,11 +3,10 @@ import { sequelize as seq } from '../../config/sequelizeConfig'
 import { validateName } from '../../services/basicValidators'
 import { ModelAttributes } from '../../types/databaseTypes'
 import { ValidationResult } from '../../types/validationTypes'
-import { PERMISSION_TYPES } from '../../types/enums'
 
 export interface PermissionModelAttributes extends ModelAttributes {
   permission: string
-  perm_type: PERMISSION_TYPES
+  perm_type: string
 }
 
 export const validatePermission = function (y: PermissionModelAttributes): ValidationResult {

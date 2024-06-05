@@ -85,13 +85,6 @@ export enum AUTH_STRATEGIES {
   LOCAL = 'local',
 }
 
-// permission types
-
-export enum PERMISSION_TYPES {
-  READ_ONLY = 'read',
-  WRITE = 'write',
-}
-
 // Roles
 
 export enum USER_ROLES {

@@ -3,6 +3,7 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "prettier"
+        // "plugin:security/recommended-legacy"
     ],
     "plugins": [
         "@typescript-eslint"
