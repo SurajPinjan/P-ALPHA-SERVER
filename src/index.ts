@@ -41,6 +41,7 @@ const DB_HOST: string = process.env.DB_HOST ? process.env.DB_HOST : 'localhost'
 const DB_USER: string = process.env.DB_USER ? process.env.DB_USER : 'root'
 const DB_PASSWORD: string = process.env.DB_PASSWORD ? process.env.DB_PASSWORD : 'admin123'
 const DB_NAME: string = process.env.DB_NAME ? process.env.DB_NAME : 'schema_x'
+const SECURE_FLAG: string = process.env.SECURE_FLAG ? process.env.SECURE_FLAG : 'false'
 
 const app: Express = express()
 
@@ -87,7 +88,7 @@ app.use(
     }),
     cookie: {
       path: '/',
-      secure: false,
+      secure: SECURE_FLAG === 'true' ? true : false,
       maxAge: 120 * 60 * 1000,
       httpOnly: true,
     },
