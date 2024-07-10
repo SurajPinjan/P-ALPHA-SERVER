@@ -4,6 +4,8 @@ import express, { Express, NextFunction, Request, Response } from 'express'
 import session from 'express-session'
 import passport from 'passport'
 import { v4 as uuidv4 } from 'uuid'
+import https from 'https'
+import fs from 'fs'
 import pool from './config/mysqlConnPool'
 import './auth/passportConfig'
 import { router as UserV2 } from './controllers/CRUDControllers/UserV2Controller'
@@ -36,12 +38,15 @@ const LDAP_SERVER_HOST: string = process.env.LDAP_SERVER_HOST ? process.env.LDAP
 const LDAP_SERVER_PORT: string = process.env.LDAP_SERVER_PORT ? process.env.LDAP_SERVER_PORT : '636'
 const LDAP_PROTOCOL: string = process.env.LDAP_PROTOCOL ? process.env.LDAP_PROTOCOL : 'ldaps'
 const PORT: string = process.env.PORT ? process.env.PORT : '3001'
+const HOST: string = process.env.HOST ? process.env.HOST : 'localhost'
 const CLIENT_PORT: string = process.env.CLIENT_PORT ? process.env.CLIENT_PORT : '5173'
 const DB_HOST: string = process.env.DB_HOST ? process.env.DB_HOST : 'localhost'
 const DB_USER: string = process.env.DB_USER ? process.env.DB_USER : 'root'
 const DB_PASSWORD: string = process.env.DB_PASSWORD ? process.env.DB_PASSWORD : 'admin123'
 const DB_NAME: string = process.env.DB_NAME ? process.env.DB_NAME : 'schema_x'
 const SECURE_FLAG: string = process.env.SECURE_FLAG ? process.env.SECURE_FLAG : 'false'
+const CERT_FILE: string = process.env.CERT_FILE ? process.env.CERT_FILE : 'cert.pem'
+const KEY_FILE: string = process.env.KEY_FILE ? process.env.KEY_FILE : 'key.pem'
 
 const app: Express = express()
 
@@ -174,6 +179,17 @@ app.use('/app/v2/defaultperms', DefaultPermsRoutesV2)
 app.use('/app/v2/roledefaultperms', RoleDefaultPermsRoutesV2)
 app.use('/app/v2/report', reportV2)
 
-app.listen(PORT, () => {
-  console.log(`[server]: Server is running at http://localhost:${PORT}`)
-})
+if (SECURE_FLAG === 'true') {
+  const sslOptions = {
+    key: fs.readFileSync(KEY_FILE),
+    cert: fs.readFileSync(CERT_FILE)
+  };
+
+  https.createServer(sslOptions, app).listen(PORT, () => {
+    console.log(`[server]: Server is running at https://${HOST}:${PORT}`);
+  });
+} else {
+  app.listen(PORT, () => {
+    console.log(`[server]: Server is running at http://${HOST}:${PORT}`)
+  })
+}
