@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import { _transporter } from '..';
+import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 const transportFactory = (user: string, pass: string) => {
     return nodemailer.createTransport({
@@ -15,7 +16,8 @@ const transportFactory = (user: string, pass: string) => {
     });
 }
 
-const sendMail = async (to: string, subject: string, text: string) => {
+const sendMail = async (to: string, subject: string, text: string):
+    Promise<SMTPTransport.SentMessageInfo> => {
 
     const mailOptions = {
         from: process.env.EMAIL_USER,
@@ -24,7 +26,8 @@ const sendMail = async (to: string, subject: string, text: string) => {
         text,
     };
 
-    await _transporter.sendMail(mailOptions);
+    const _status: Promise<SMTPTransport.SentMessageInfo> = _transporter.sendMail(mailOptions);
+    return _status;
 
 };
 

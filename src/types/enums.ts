@@ -4,6 +4,7 @@ export enum API_RESPONSE_CODE {
   SUCCESS_PING,
   SUCCESS_CREATE,
   SUCCESS_UPDATE,
+  SUCCESS_MAIL_SENT,
   ERROR,
   NOT_FOUND,
   REQUEST_INVALID,
@@ -13,6 +14,7 @@ export enum API_RESPONSE_CODE {
   ERROR_UPLOADING_FILE,
   ERROR_INVALID_TOKEN,
   ERROR_INVALID_ROLE,
+  ERROR_SENDING_MAIL,
 }
 
 export const API_RESPONSE_MAP: Record<API_RESPONSE_CODE, { code: string; displayMsg: string }> = {
@@ -21,6 +23,10 @@ export const API_RESPONSE_MAP: Record<API_RESPONSE_CODE, { code: string; display
   [API_RESPONSE_CODE.SUCCESS_UPDATE]: { code: 'S003', displayMsg: 'Update successful' },
   [API_RESPONSE_CODE.LDAP_LOGIN_SUCCESS]: { code: 'S004', displayMsg: 'LDAP Login successful' },
   [API_RESPONSE_CODE.SUCCESS_PING]: { code: 'S005', displayMsg: 'API Working :)' },
+  [API_RESPONSE_CODE.SUCCESS_MAIL_SENT]: {
+    code: 'S006',
+    displayMsg: 'Mail sent successfully',
+  },
   [API_RESPONSE_CODE.ERROR]: { code: 'ER001', displayMsg: 'An error occurred. Please try again later.' },
   [API_RESPONSE_CODE.NOT_FOUND]: { code: 'ER002', displayMsg: 'The requested resource was not found.' },
   [API_RESPONSE_CODE.REQUEST_INVALID]: { code: 'ER003', displayMsg: 'Invalid request. Please check your input.' },
@@ -32,6 +38,10 @@ export const API_RESPONSE_MAP: Record<API_RESPONSE_CODE, { code: string; display
   [API_RESPONSE_CODE.ERROR_INVALID_ROLE]: {
     code: 'ER009',
     displayMsg: 'You do not have permission to perform this action.',
+  },
+  [API_RESPONSE_CODE.ERROR_SENDING_MAIL]: {
+    code: 'ER010',
+    displayMsg: 'Error sending mail.',
   },
 }
 
@@ -51,6 +61,9 @@ export enum HTTP_OPERATION {
 
   // FILE
   UPLOAD = 'upload',
+
+  // MAIL
+  SEND_MAIL = 'sendmail',
 }
 
 // entity names
@@ -72,6 +85,7 @@ export enum ENTITY_NAME {
   AUTH = 'auth',
   MASTER = 'master',
   MEDIA = 'media',
+  MAIL = 'mail',
 }
 
 // fixed Medias

@@ -31,6 +31,7 @@ import { SESSION_NAME } from './types/enums'
 import logger from './config/winston-config'
 import { Client, createClient } from 'ldapjs'
 import { transportFactory } from './services/mailServiceGmail'
+import { router as MailRoutesV2 } from './controllers/UIControllers/MailV2Controller'
 
 dotenv.config()
 
@@ -184,6 +185,7 @@ app.use('/app/v2/permission', PermissionRoutesV2)
 app.use('/app/v2/defaultperms', DefaultPermsRoutesV2)
 app.use('/app/v2/roledefaultperms', RoleDefaultPermsRoutesV2)
 app.use('/app/v2/report', reportV2)
+app.use('/app/v2/mail', MailRoutesV2)
 
 if (SECURE_FLAG === 'true') {
   const sslOptions = {

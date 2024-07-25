@@ -9,6 +9,12 @@ export type Sort = {
   sort: SortDirections
 }
 
+export type HttpMailRequestBody = {
+  to: string[]
+  subject: string
+  text: string
+}
+
 export type HttpGetAllRequestBody = {
   pageNumber?: number
   pageSize?: number
