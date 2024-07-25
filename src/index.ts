@@ -30,6 +30,7 @@ import { generateSecretKey } from './services/cryptoService'
 import { SESSION_NAME } from './types/enums'
 import logger from './config/winston-config'
 import { Client, createClient } from 'ldapjs'
+import { transportFactory } from './services/mailServiceGmail'
 
 dotenv.config()
 
@@ -47,6 +48,8 @@ const DB_NAME: string = process.env.DB_NAME ? process.env.DB_NAME : 'schema_x'
 const SECURE_FLAG: string = process.env.SECURE_FLAG ? process.env.SECURE_FLAG : 'false'
 const CERT_FILE: string = process.env.CERT_FILE ? process.env.CERT_FILE : 'cert.pem'
 const KEY_FILE: string = process.env.KEY_FILE ? process.env.KEY_FILE : 'key.pem'
+const MAIL_USER: string = process.env.MAIL_USER ? process.env.MAIL_USER : '';
+const MAIL_PASS: string = process.env.MAIL_PASS ? process.env.MAIL_PASS : '';
 
 const app: Express = express()
 
@@ -58,6 +61,9 @@ process.on('uncaughtException', (err: Error) => {
 process.on('unhandledRejection', (reason: string, promise: Promise<unknown>) => {
   logger.error('Unhandled Rejection', { reason, promise })
 })
+
+// mail transporter initialize
+export const _transporter = transportFactory(MAIL_USER, MAIL_PASS);
 
 //network initialize
 app.all('/*', function (req: Request, res: Response, next: NextFunction) {

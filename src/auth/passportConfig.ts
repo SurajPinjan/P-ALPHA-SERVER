@@ -10,6 +10,7 @@ import { HttpErrorResponseBody, PassportRequest } from '../types/httpTypes'
 passport.use(
   new LocalStrategy(async (username: string, password: string, done) => {
     try {
+      
       const user: UModelAttributes | null = await getUByUsername(username)
 
       if (!user || user == null) {
