@@ -1,4 +1,4 @@
-export interface ModelAttributes {
+interface ModelAttributes {
   uid: number
   createDate?: Date
   createBy: string
@@ -6,3 +6,10 @@ export interface ModelAttributes {
   updateBy?: string
   isDeleted?: boolean
 }
+
+interface CronType {
+  cron: string
+  job: () => void
+}
+
+export { CronType, ModelAttributes }

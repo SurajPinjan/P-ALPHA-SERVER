@@ -32,7 +32,8 @@ import logger from './config/winston-config'
 import { Client, createClient } from 'ldapjs'
 import { transportFactory } from './services/mailServiceGmail'
 import { router as MailRoutesV2 } from './controllers/UIControllers/MailV2Controller'
-
+import cron from 'node-cron';
+import { testCron } from './services/cronService'
 dotenv.config()
 
 // get environment values
@@ -62,6 +63,12 @@ process.on('uncaughtException', (err: Error) => {
 process.on('unhandledRejection', (reason: string, promise: Promise<unknown>) => {
   logger.error('Unhandled Rejection', { reason, promise })
 })
+
+// cron initialize
+
+cron.schedule(
+  testCron.cron, testCron.job
+);
 
 // mail transporter initialize
 export const _transporter = transportFactory(MAIL_USER, MAIL_PASS);
