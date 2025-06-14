@@ -1,4 +1,4 @@
-import { Request } from 'express'
+import { Request, Express } from 'express'
 import multer from 'multer'
 
 const destationFinder = (

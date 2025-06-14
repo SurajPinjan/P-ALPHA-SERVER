@@ -27,23 +27,23 @@ You can customize the project configuration i nthe `tsconfig.json` file and adju
 
 <!-- create migration-->
 
-npx knex migrate:make init-migration --knexfile src\config\knexfile.ts
+npx knex migrate:make init-migration --knexfile src/config/knexfile.ts
 
 <!-- create seed -->
 
-npx knex seed:make init-seed --knexfile src\config\knexfile.ts
+npx knex seed:make init-seed --knexfile src/config/knexfile.ts
 
 <!-- run latest migration up -->
 
-npx knex migrate:latest --knexfile src\config\knexfile.ts
+npx knex migrate:latest --knexfile src/config/knexfile.ts
 
 <!-- rollback migration -->
 
-npx knex migrate:rollback --knexfile src\config\knexfile.ts
+npx knex migrate:rollback --knexfile src/config/knexfile.ts
 
 <!-- run seed -->
 
-npx knex seed:run --knexfile src\config\knexfile.ts
+npx knex seed:run --knexfile src/config/knexfile.ts
 
 <!-- pm2 start process -->
 

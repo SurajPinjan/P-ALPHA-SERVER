@@ -3,7 +3,7 @@ import { MYSQL_CLIENT } from '../types/enums'
 
 const DB_HOST: string = 'localhost'
 const DB_USER: string = 'root'
-const DB_PASSWORD: string = 'admin123'
+const DB_PASSWORD: string = 'Surobotics@1992'
 const DB_NAME: string = 'schema_a'
 const KNEX_MIGRATION_DIR: string = '../dbsync/migrations'
 const KNEX_SEED_DIR: string = '../dbsync/seeds'

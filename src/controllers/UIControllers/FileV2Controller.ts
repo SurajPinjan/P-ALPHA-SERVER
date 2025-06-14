@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express'
+import { Request, Response, Router, Express } from 'express'
 
 import { ensureAuthenticated } from '../../auth/passportConfig'
 import { uploader } from '../../config/multerConfig'

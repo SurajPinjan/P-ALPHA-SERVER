@@ -1,7 +1,7 @@
 import { validateName, validatePassword, validateuid } from '../../services/basicValidators'
 import { ModelAttributes } from '../../types/databaseTypes'
 import { ValidationResult } from '../../types/validationTypes'
-
+import { Express } from 'express'
 export interface UserAttributes extends ModelAttributes, Express.User {
   username: string
   passwordHash: string

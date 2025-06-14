@@ -35,6 +35,7 @@ const validateStringifiedArray = function (text: string): boolean {
     const parsed = JSON.parse(text) as string[]
     return Array.isArray(parsed) && parsed.every((item) => typeof item === 'string')
   } catch (error) {
+    console.error(error);
     return false
   }
 }

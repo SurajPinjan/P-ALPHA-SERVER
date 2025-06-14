@@ -50,7 +50,6 @@ function getSortClause(sorts: Sort[]): string {
 
   const resp: string = clauses.join(', ')
   return ` ${resp === '' ? '' : 'ORDER BY '} ${resp}`
-  return resp
 }
 
 export { getWhereClause, getSortClause }

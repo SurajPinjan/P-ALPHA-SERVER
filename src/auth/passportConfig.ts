@@ -39,14 +39,14 @@ passport.deserializeUser<UModelAttributes>(async (user: UModelAttributes, done) 
   }
 })
 
-export function ensureAuthenticated(req: unknown, res: unknown, next: NextFunction) {
+export function ensureAuthenticated(req: unknown, res: unknown, next: NextFunction): void {
   const reqAuth = req as PassportRequest
   const resAuth = res as Response
 
   if (reqAuth.isAuthenticated()) {
     next()
   } else {
-    return resAuth.status(400).send({
+    resAuth.status(400).send({
       responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_INVALID_TOKEN].code,
       displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_INVALID_TOKEN].displayMsg,
       errorMessage: `Token is invalid`,
@@ -54,18 +54,18 @@ export function ensureAuthenticated(req: unknown, res: unknown, next: NextFuncti
   }
 }
 
-export function isAuthenticatedAdmin(req: unknown, res: unknown, next: NextFunction) {
+export function isAuthenticatedAdmin(req: unknown, res: unknown, next: NextFunction): void {
   const reqAuth = req as PassportRequest
   const resAuth = res as Response
 
   if (!reqAuth.isAuthenticated()) {
-    return resAuth.status(400).send({
+    resAuth.status(400).send({
       responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_INVALID_TOKEN].code,
       displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_INVALID_TOKEN].displayMsg,
       errorMessage: `Token is invalid`,
     } as HttpErrorResponseBody)
   } else if (reqAuth.user.role_name !== USER_ROLES.ADMIN) {
-    return resAuth.status(400).send({
+    resAuth.status(400).send({
       responseCode: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_INVALID_ROLE].code,
       displayMsg: API_RESPONSE_MAP[API_RESPONSE_CODE.ERROR_INVALID_ROLE].displayMsg,
       errorMessage: `Not an admin`,

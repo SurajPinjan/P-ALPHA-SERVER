@@ -1,3 +1,4 @@
+import {Express} from 'express';
 import Sequelize, { DataTypes, Model } from 'sequelize'
 import { sequelize as seq } from '../../config/sequelizeConfig'
 import { validateName, validatePassword } from '../../services/basicValidators'
