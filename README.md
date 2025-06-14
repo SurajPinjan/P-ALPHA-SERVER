@@ -28,22 +28,25 @@ You can customize the project configuration i nthe `tsconfig.json` file and adju
 <!-- create migration-->
 
 npx knex migrate:make init-migration --knexfile src/config/knexfile.ts
-
+npx ts-node -r tsconfig-paths/register ./node_modules/.bin/knex migrate:make init-migration --knexfile src/config/knexfile.ts
 <!-- create seed -->
 
 npx knex seed:make init-seed --knexfile src/config/knexfile.ts
-
+npx ts-node -r tsconfig-paths/register ./node_modules/.bin/knex seed:make init-seed --knexfile src/config/knexfile.ts
 <!-- run latest migration up -->
 
 npx knex migrate:latest --knexfile src/config/knexfile.ts
+npx ts-node -r tsconfig-paths/register ./node_modules/.bin/knex migrate:latest --knexfile src/config/knexfile.ts
 
 <!-- rollback migration -->
 
 npx knex migrate:rollback --knexfile src/config/knexfile.ts
-
+npx ts-node -r tsconfig-paths/register ./node_modules/.bin/knex migrate:rollback --knexfile src/config/knexfile.ts
 <!-- run seed -->
 
 npx knex seed:run --knexfile src/config/knexfile.ts
+npx ts-node -r tsconfig-paths/register ./node_modules/.bin/knex seed:run --knexfile src/config/knexfile.ts
+
 
 <!-- pm2 start process -->
 
@@ -60,3 +63,8 @@ pkg . --target node16-win-x64 --output alpha-server.exe --entry [dist/index.js] 
 <!-- create service (needs admin)-->
 
 sc.exe create "6SigmaServer" binPath= "C:\work\Titan_Projects\six_sigma_server\6sigma-server.exe" start= auto DisplayName= "6SigmaServer"
+
+
+
+global packages:
+npm install -g npm-check-updates

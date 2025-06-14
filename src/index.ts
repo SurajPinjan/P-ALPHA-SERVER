@@ -66,15 +66,15 @@ process.on('unhandledRejection', (reason: string, promise: Promise<unknown>) => 
 
 // cron initialize
 
-cron.schedule(
-  testCron.cron, testCron.job
-);
+// cron.schedule(
+//   testCron.cron, testCron.job
+// );
 
 // mail transporter initialize
 export const _transporter = transportFactory(MAIL_USER, MAIL_PASS);
 
 //network initialize
-app.all('/*', function (req: Request, res: Response, next: NextFunction) {
+app.all('/*splat', function (req: Request, res: Response, next: NextFunction) {
   res.header('Access-Control-Allow-Origin', [`http://localhost:${CLIENT_PORT}`])
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Authorization,')
   res.header('Access-Control-Allow-Methods', 'POST')
