@@ -1,13 +1,19 @@
 import { Knex } from "knex";
 
 export async function seed(knex: Knex): Promise<void> {
-    // Deletes ALL existing entries
-    await knex("table_name").del();
+  // Clear existing roles if needed
+  await knex("user_roles").del();
 
-    // Inserts seed entries
-    await knex("table_name").insert([
-        { id: 1, colName: "rowValue1" },
-        { id: 2, colName: "rowValue2" },
-        { id: 3, colName: "rowValue3" }
-    ]);
-};
+  // Insert a super admin role
+  await knex("user_roles").insert([
+    {
+      uid: '1', // Use actual UUID or a generated one
+      role_name: 'super_admin',
+      createDate: new Date(),
+      createBy: 'system', // or admin user ID
+      updateDate: new Date(),
+      updateBy: 'system',
+      isDeleted: false,
+    },
+  ]);
+}

@@ -75,7 +75,8 @@ export const _transporter = transportFactory(MAIL_USER, MAIL_PASS);
 
 //network initialize
 app.all('/*splat', function (req: Request, res: Response, next: NextFunction) {
-  res.header('Access-Control-Allow-Origin', [`http://localhost:${CLIENT_PORT}`])
+  // res.header('Access-Control-Allow-Origin', [`http://localhost:${CLIENT_PORT}`])
+  res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Authorization,')
   res.header('Access-Control-Allow-Methods', 'POST')
   res.header('Access-Control-Allow-Credentials', 'true')
