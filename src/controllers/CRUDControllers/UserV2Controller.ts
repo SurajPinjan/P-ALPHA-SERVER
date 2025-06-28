@@ -19,7 +19,7 @@ router.post(`/${HTTP_OPERATION.GET_ONE}`, ensureAuthenticated, getOne<UserAttrib
 
 router.post(
   `/${HTTP_OPERATION.CREATE_ONE}`,
-  // isAuthenticatedAdmin,
+  isAuthenticatedAdmin,
   createOne<UserAttributes>(createOneUser, validateUser)
 )
 
